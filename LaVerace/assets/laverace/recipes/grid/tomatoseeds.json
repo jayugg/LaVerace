@@ -1,0 +1,13 @@
+[
+  {
+  "name": "deseeded tomato",
+  "ingredientPattern": "TK",
+  "ingredients": {
+    "K": { "type": "item", "code": "game:knife-*", "isTool": true  },
+    "T": { "type": "item", "code": "laverace:tomato-*", "name": "variety" }
+  },
+  "width": 2,
+  "height": 1,
+  "output": { "type": "item", "code": "laverace:seeds-{variety}"  }
+  }
+]

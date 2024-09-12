@@ -1,0 +1,129 @@
+{
+  "code": "tomato",
+  "maxstacksize": 64,
+  "variantgroups": [
+    { "code": "variety", "states": ["cherry", "sammarzano", "oxheart"] }
+  ],
+  "materialDensityByType": {
+    "*": 600
+  },
+  "attributes": {
+    "foodTags": ["{fruit}"],
+    "nutritionPropsWhenInMeal": {
+      "satietyByType":  {
+        "*-cherry": 60,
+        "*-sammarzano": 90,
+        "*-oxheart": 120,
+        "*":  90
+      },
+      "foodcategory": "Fruit"
+    },
+    "inPiePropertiesByType": {
+      "*": { "texture": "game:block/food/pie/fill-raspberry", "partType": "Filling" }
+    },
+    "inPizzaPropertiesByType": {
+      "*": { "texture": "game:block/food/pie/fill-raspberry", "partType": "Sauce" }
+    },
+    "juiceablePropertiesByType": {
+      "*": {
+        "litresPerItem": 0.3125,
+        "liquidStack": { "type": "item", "code": "laverace:juiceportion-{variety}", "stacksize": 1 },
+        "pressedStack": { "type": "item", "code": "laverace:pressedmash-{variety}", "stacksize": 1 }
+      }
+    }
+  },
+  "shapebytype": {
+    "*-cherry": { "base": "item/tomato/cherry" },
+    "*-sammarzano": { "base": "item/tomato/sammarzano" },
+    "*-oxheart": { "base": "item/tomato/oxheart" }
+  },
+  "textureByType": {
+    "*": { "base": "game:item/food/fruit/cherry" }
+  },
+  "creativeinventory": {
+    "general": ["*"], "items": ["*"] },
+  "nutritionPropsByType": {
+    "*-cherry": { "satiety": 40, "foodcategory": "Fruit" },
+    "*-sammarzano": { "satiety": 60, "foodcategory": "Fruit" },
+    "*-oxheart": { "satiety": 80, "foodcategory": "Fruit" },
+    "*": { "satiety": 80, "foodcategory": "Fruit" }
+  },
+  "transitionablePropsByType": {
+    "*": [{
+      "type": "Perish",
+      "freshHours": {
+        "avg": 96 },
+      "transitionHours": {
+        "avg": 12 },
+      "transitionedStack": {
+        "type": "item", "code": "game:rot" },
+      "transitionRatio": 0.25
+    }]
+  },
+  "guiTransformByType": {
+    "*-oxheart": {
+        "translation": { "x": 0, "y": 1, "z": 0 },
+        "rotation": { "x": 154, "y": -175, "z": -15 },
+        "origin": { "x": 0.5, "y": 0.14, "z": 0.5 },
+        "scale": 4.44
+    },
+    "*-cherry": {
+      "translation": {
+        "x": 0, "y": 1, "z": 0
+      },
+      "rotation": {
+        "x": 162, "y": -175, "z": -15 },
+      "origin": {
+        "x": 0.51, "y": 0.2, "z": 0.5 },
+      "scale": 2.92
+    },
+    "*-sammarzano": {
+        "translation": { "x": 0, "y": 0, "z": 0 },
+        "rotation": { "x": 145, "y": -164, "z": -22 },
+        "origin": { "x": 0.5, "y": 0.33, "z": 0.5 },
+        "scale": 6
+    }
+  },
+  "fpHandTransformByType": {
+    "@*": {
+      "translation": {
+        "x": 0, "y": -0.05, "z": 0
+      },
+      "rotation": {
+        "x": 36, "y": 92, "z": -32 },
+      "origin": {
+        "x": 0.5, "y": 1.2, "z": 0.5 },
+      "scale": 2
+    }
+  },
+  "tpHandTransformByType": {
+    "@*": {
+      "translation": {
+        "x": -1.3899, "y": -0.96, "z": -0.86 },
+      "rotation": {
+        "x": -27, "y": 0, "z": -90 },
+      "scale": 0.56
+    }
+  },
+  "tpOffHandTransformByType": {
+    "*": {
+      "translation": {
+        "x": -1.1, "y": -1.4299, "z": -1.25 },
+      "rotation": {
+        "x": -6, "y": -33, "z": -93 },
+      "scale": 0.36
+    }
+  },
+  "groundTransformByType": {
+    "@*": {
+      "translation": {
+        "x": 0, "y": 0, "z": 0
+      },
+      "rotation": {
+        "x": 95, "y": 11, "z": -135 },
+      "origin": {
+        "x": 0.6, "y": 0.2, "z": 0.41 },
+      "scale": 3.4
+    }
+  }
+}

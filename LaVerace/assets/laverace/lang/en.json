@@ -1,0 +1,36 @@
+{
+    "item-tomato-cherry": "Cherry tomato",
+    "item-tomato-sammarzano": "San Marzano tomato",
+    "item-tomato-oxheart": "Oxheart tomato",
+
+    "block-tomatobush-cherry": "Cherry tomato plant",
+    "block-tomatobush-oxheart": "Oxheart tomato plant",
+    "block-tomatobush-sammarzano": "San Marzano tomato plant",
+
+    "item-juiceportion-cherry": "Cherry tomato juice",
+    "incontainer-item-juiceportion-cherry": "Cherry tomato juice",
+    "item-juiceportion-sammarzano": "San Marzano tomato juice",
+    "incontainer-item-juiceportion-sammarzano": "San Marzano tomato juice",
+    "item-juiceportion-oxheart": "Oxheart tomato juice",
+    "incontainer-item-juiceportion-oxheart": "Oxheart tomato juice",
+    "item-juiceportion-mixed": "Tomato juice",
+    "incontainer-item-juiceportion-mixed": "Tomato juice",
+    
+    "item-tomatosauceportion-cherry": "Cherry tomato sauce",
+    "incontainer-item-tomatosauceportion-cherry": "Cherry tomato sauce",
+    "item-tomatosauceportion-sammarzano": "San Marzano tomato sauce",
+    "incontainer-item-tomatosauceportion-sammarzano": "San Marzano tomato sauce",
+    "item-tomatosauceportion-oxheart": "Oxheart tomato sauce",
+    "incontainer-item-tomatosauceportion-oxheart": "Oxheart tomato sauce",
+    "item-tomatosauceportion-mixed": "Tomato sauce",
+    "incontainer-item-tomatosauceportion-mixed": "Tomato sauce",
+    
+    "item-pressedmash-cherry-wet": "Wet cherry tomato mash",
+    "item-pressedmash-sammarzano-wet": "Wet San Marzano tomato mash",
+    "item-pressedmash-oxheart-wet": "Wet Oxheart tomato mash",
+    
+    "item-pressedmash-cherry-dry": "Dry cherry tomato mash",
+    "item-pressedmash-sammarzano-dry": "Dry San Marzano tomato mash",
+    "item-pressedmash-oxheart-dry": "Dry Oxheart tomato mash"
+
+}

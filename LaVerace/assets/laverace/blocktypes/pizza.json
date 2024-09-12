@@ -1,0 +1,147 @@
+{
+  "code": "pizza",
+  "class": "laverace.BlockPizza",
+  "behaviors": [
+    { "name": "UnstableFalling"},
+    { "name": "SneakPlacing" },
+    { "name": "RightClickPickup" }
+  ],
+  "entityClass": "laverace.BlockEntityPizza",
+  "maxstacksize": 32,
+  "__comment": "The valid pie fillings are defined in each ingredients json file",
+  "variantgroups": [
+    { "code": "state", "states": ["raw", "partbaked", "perfect", "charred" ] }
+  ],
+  "shape": { "base": "block/pizza-full-fill0" },
+  "creativeinventoryStacksByType": {
+    "*-raw": [
+      {
+        "tabs": [ "general", "decorative" ],
+        "stacks": [
+          { "type": "block", "code": "laverace:pizza-raw", "attributes": {
+            "ucontents": [ { "type": "item", "code": "laverace:dough-spelt"} ],
+            "pizzaSize": 4 }
+          },
+          { "type": "block", "code": "laverace:pizza-perfect", "attributes": {
+            "ucontents": [ { "type": "item", "code": "laverace:dough-spelt"}, { "type": "item", "code": "laverace:tomatosauceportion-mixed", "quantity":  50} ],
+            "pizzaSize": 4, "bakeLevel": 2 }
+          },
+          { "type": "block", "code": "laverace:pizza-partbaked", "attributes": {
+            "ucontents": [ { "type": "item", "code": "laverace:dough-spelt"}, { "type": "item", "code": "laverace:tomatosauceportion-mixed", "quantity":  50} ],
+            "pizzaSize": 4, "bakeLevel": 1 }
+          },
+          { "type": "block", "code": "laverace:pizza-raw", "attributes": {
+            "ucontents": [ { "type": "item", "code": "laverace:dough-spelt"}, { "type": "item", "code": "laverace:tomatosauceportion-mixed", "quantity":  50} ],
+            "pizzaSize": 4, "bakeable": true }
+          }
+        ]
+      }
+    ]
+  },
+  "attributes": {
+    "bakingPropertiesByType": {
+      "*-raw":  {
+        "LargeItem": true,
+        "temp": 160,
+        "levelFrom": 0.0,
+        "startScaleY": 0.9,
+        "endScaleY": 0.95,
+        "levelTo": 0.25,
+        "resultCode": "laverace:pizza-partbaked"
+      },
+      "*-partbaked":  {
+        "LargeItem": true,
+        "temp": 160,
+        "levelFrom": 0.25,
+        "levelTo": 0.5,
+        "startScaleY": 0.95,
+        "endScaleY": 1.10,
+        "resultCode": "laverace:pizza-perfect",
+        "initialCode": "laverace:pizza-raw"
+      },
+      "*-perfect":  {
+        "LargeItem": true,
+        "temp": 160,
+        "levelFrom": 0.5,
+        "levelTo": 0.75,
+        "startScaleY": 1.10,
+        "endScaleY": 1.13,
+        "resultCode": "laverace:pizza-charred",
+        "initialCode": "laverace:pizza-partbaked"
+      },
+      "*-charred":  {
+        "LargeItem": true,
+        "temp": 160,
+        "levelFrom": 0.75,
+        "levelTo": 1,
+        "startScaleY": 1.13,
+        "endScaleY": 1.11,
+        "initialCode": "laverace:pizza-perfect"
+      }},
+    "nutritionMulByType": {
+      "*-partbaked": 0.9,
+      "*-perfect": 1,
+      "*-charred": 0.8
+    }
+  },
+  "transitionablePropsByType": {
+    "*-raw":  [{
+      "type": "Perish",
+      "freshHours": { "avg": 48 },
+      "transitionHours": { "avg": 36 },
+      "transitionedStack": { "type": "item", "code": "game:rot" },
+      "transitionRatio": 1
+    }],
+    "*-partbaked":  [{
+      "type": "Perish",
+      "freshHours": { "avg": 120 },
+      "transitionHours": { "avg": 36 },
+      "transitionedStack": { "type": "item", "code": "game:rot" },
+      "transitionRatio": 1
+    }],
+    "*-perfect":  [{
+      "type": "Perish",
+      "freshHours": { "avg": 192 },
+      "transitionHours": { "avg": 36 },
+      "transitionedStack": { "type": "item", "code": "game:rot" },
+      "transitionRatio": 1
+    }],
+    "*-charred":  [{
+      "type": "Perish",
+      "freshHours": { "avg": 288 },
+      "transitionHours": { "avg": 36 },
+      "transitionedStack": { "type": "item", "code": "game:rot" },
+      "transitionRatio": 1
+    }]
+  },
+  "materialDensity": 200,
+  "sideOpaque": { "all": false },
+  "sideSolid": { "all": false },
+  "emitSideAo": { "all": false },
+  "collisionSelectionBox": { "x1": 0.1875, "y1": 0, "z1": 0.1875, "x2": 0.8125, "y2": 0.1875, "z2": 0.8125 },
+  "heldTpIdleAnimation": "holdbothhands",
+  "drops": [],
+  "guiTransform": {
+    "rotation": { "x": -25, "y": 0, "z": 12 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+    "scale": 1.86
+  },
+  "groundTransform": {
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 1 },
+    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+    "scale": 4.5
+  },
+  "tpHandTransform": {
+    "translation": { "x": -0.86, "y": -0.14, "z": -0.57 },
+    "rotation": { "x": -49, "y": 29, "z": -112 },
+    "origin": { "x": 0.5, "y": 0.13, "z": 0.5 },
+    "scale": 0.7
+  },
+  "fpHandTransform": {
+    "translation": { "x": -0.2, "y": 0.2, "z": 0.3 },
+    "rotation": { "x": 10, "y": -19, "z": 3 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+    "scale": 1.76
+  }
+}

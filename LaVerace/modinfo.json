@@ -1,0 +1,15 @@
+{
+    "type": "code",
+    "modid": "laverace",
+    "name": "LaVerace",
+    "authors": [
+        "jayu"
+    ],
+    "description": "Adds Neapolitan pizza and tomato and sauce making",
+    "version": "1.0.0",
+    "dependencies": {
+        "game": "",
+        "aculinaryartillery": "",
+        "expandedfoods": ""
+    }
+}
