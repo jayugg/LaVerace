@@ -27,15 +27,16 @@ public class LvCore : ModSystem
         api.RegisterBlockEntityClass($"{Modid}.{nameof(BlockEntityPizza)}", typeof(BlockEntityPizza));
         api.RegisterItemClass($"{Modid}.{nameof(ItemPizzaDough)}", typeof(ItemPizzaDough));
         api.RegisterItemClass($"{Modid}.{nameof(ItemExpandedPlantableSeed)}", typeof(ItemExpandedPlantableSeed));
+        LvCore.Logger.Notification("Starting LaVerace");
     }
 
     public override void StartServerSide(ICoreServerAPI api)
     {
-        api.Logger.Notification("Hello from template mod server side: " + Lang.Get("laverace:hello"));
+        // api.Logger.Notification("Hello from template mod server side: " + Lang.Get("laverace:hello"));
     }
 
     public override void StartClientSide(ICoreClientAPI api)
     {
-        api.Logger.Notification("Hello from template mod client side: " + Lang.Get("laverace:hello"));
+        // api.Logger.Notification("Hello from template mod client side: " + Lang.Get("laverace:hello"));
     }
 }

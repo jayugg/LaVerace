@@ -8,6 +8,11 @@
     "*": 600
   },
   "attributes": {
+    "handbook": {
+      "extraSections": [
+        { "title": "laverace:handbooktitle-tomato", "text": "laverace:handbooktext-tomato" }
+      ]
+    },
     "inContainerTexture": { "base": "game:block/food/pie/fill-tomato" },
     "foodTags": ["{fruit}"],
     "nutritionPropsWhenInMeal": {

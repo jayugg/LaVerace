@@ -72,7 +72,7 @@ namespace LaVerace.ModBlockEntity
             {
                 if (inv[0].Itemstack.Block is not BlockPizza pizzaBlock) return false;
                 ItemStack[] cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
-                LvCore.Logger.Warning($"Checking filling: {cStacks.Length}");
+                // LvCore.Logger.Warning($"Checking filling: {cStacks.Length}");
                 if (cStacks.Length < 6) return false;
                 return cStacks[1] != null && cStacks[2] != null && cStacks[3] != null && cStacks[4] != null && cStacks[5] != null;
             }
@@ -288,12 +288,11 @@ namespace LaVerace.ModBlockEntity
             if (slot.Itemstack.Collectible is BlockLiquidContainerBase)
             {
                 pizzaProps = container.GetContent(slot.Itemstack)?.ItemAttributes?["inPizzaProperties"]?.AsObject<InPizzaProperties>(null);
-                LvCore.Logger.Warning("Container flag set");
-                LvCore.Logger.Warning("Container content: " + container.GetContent(slot.Itemstack));
-                LvCore.Logger.Warning("Container content props: " + container.GetContent(slot.Itemstack)?.ItemAttributes?["inPizzaProperties"]);
+                // LvCore.Logger.Warning("Container flag set");
+                // LvCore.Logger.Warning("Container content: " + container.GetContent(slot.Itemstack));
+                // LvCore.Logger.Warning("Container content props: " + container.GetContent(slot.Itemstack)?.ItemAttributes?["inPizzaProperties"]);
                 containerFlag = true;
             }
-            LvCore.Logger.Warning("PizzaProps: " + pizzaProps);
 
             pizzaProps ??= InPizzaProperties.FromPie(slot.Itemstack.ItemAttributes?["inPieProperties"]
                 ?.AsObject<InPieProperties>(null, slot.Itemstack.Collectible.Code.Domain));

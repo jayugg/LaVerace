@@ -12,7 +12,10 @@
       "foodcategory": "Vegetable"
     },
     "handbook": {
-      "ignoreCreativeInvStacks": true
+      "ignoreCreativeInvStacks": true,
+      "extraSections": [
+        { "title": "laverace:handbooktitle-tomatosauceportion", "text": "laverace:handbooktext-tomatosauceportion" }
+      ]
     },
     "waterTightContainerProps": {
       "nutritionPropsPerLitre": {

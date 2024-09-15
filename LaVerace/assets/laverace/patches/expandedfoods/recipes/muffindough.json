@@ -1,0 +1,122 @@
+[
+  {
+    "op": "addeach",
+    "path": "/0/ingredients/1/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/0/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/0/ingredients/3/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/0/ingredients/4/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/0/ingredients/5/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/1/ingredients/1/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/1/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/1/ingredients/3/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/1/ingredients/4/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/2/ingredients/1/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/2/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/2/ingredients/3/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/3/ingredients/1/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/3/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/4/ingredients/1/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/muffindough.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  }
+]

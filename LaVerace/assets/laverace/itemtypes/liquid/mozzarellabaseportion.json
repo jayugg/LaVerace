@@ -4,7 +4,10 @@
   "matterState": "liquid",
   "attributes": {
     "handbook": {
-      "ignoreCreativeInvStacks": true
+      "ignoreCreativeInvStacks": true,
+      "extraSections": [
+        { "title": "laverace:handbooktitle-mozzarellabaseportion", "text": "laverace:handbooktext-mozzarellabaseportion" }
+      ]
     },
     "waterTightContainerProps": {
       "containable": true,

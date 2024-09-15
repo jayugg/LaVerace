@@ -16,9 +16,9 @@ public static class Extensions
         if (stack.Collectible is BlockLiquidContainerBase)
         {
             pizzaProps = container.GetContent(stack)?.ItemAttributes?["inPizzaProperties"]?.AsObject<InPizzaProperties>(null);
-            LvCore.Logger.Warning("Container flag set");
-            LvCore.Logger.Warning("Container content: " + container.GetContent(stack));
-            LvCore.Logger.Warning("Container content props: " + container.GetContent(stack)?.ItemAttributes?["inPizzaProperties"]);
+            // LvCore.Logger.Warning("Container flag set");
+            // LvCore.Logger.Warning("Container content: " + container.GetContent(stack));
+            // LvCore.Logger.Warning("Container content props: " + container.GetContent(stack)?.ItemAttributes?["inPizzaProperties"]);
             containerFlag = true;
         }
 

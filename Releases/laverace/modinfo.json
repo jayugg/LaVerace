@@ -6,7 +6,7 @@
         "jayu"
     ],
     "description": "Adds Neapolitan pizza, mozzarella and tomato and sauce making",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "dependencies": {
         "game": "",
         "aculinaryartillery": "",

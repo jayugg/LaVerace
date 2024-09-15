@@ -20,7 +20,6 @@ namespace LaVerace.ModBlock
         {
             base.StartClientSide(api);
             this.capi = api;
-            api.Event.LeaveWorld += new Action(this.Event_LeaveWorld);
         }
 
         ICoreClientAPI capi;
@@ -54,7 +53,6 @@ namespace LaVerace.ModBlock
                 AssetLocation texturePath = baseTextureLoc;
                 if (textureCode == "sauce") texturePath = sauceTextureLoc;
                 if (textureCode == "cheese") texturePath = cheeseTextureLoc;
-                if (textureCode == "herb") texturePath = transparentTextureLoc;
                 if (textureCode.Contains("topping"))
                 {
                     int index = int.Parse(textureCode[7].ToString()) - 1;
@@ -63,7 +61,7 @@ namespace LaVerace.ModBlock
 
                 if (texturePath == null)
                 {
-                    capi.World.Logger.Warning("Missing texture path for pizza mesh texture code {0}, seems like a missing texture definition or invalid pizza block.", textureCode);
+                    LvCore.Logger.Warning("Missing texture path for pizza mesh texture code {0}, seems like a missing texture definition or invalid pizza block.", textureCode);
                     return capi.BlockTextureAtlas.UnknownTexturePosition;
                 }
 
@@ -79,7 +77,7 @@ namespace LaVerace.ModBlock
                     }
                     else
                     {
-                        capi.World.Logger.Warning("Pizza mesh texture {1} not found.", nowTesselatingBlock.Code, texturePath);
+                        LvCore.Logger.Warning("Pizza mesh texture {1} not found.", nowTesselatingBlock.Code, texturePath);
                         texpos = capi.BlockTextureAtlas.UnknownTexturePosition;
                     }
                 }
@@ -92,27 +90,16 @@ namespace LaVerace.ModBlock
             Dictionary<int, MultiTextureMeshRef> meshrefs;
             object obj;
             if (capi.ObjectCache.TryGetValue("pizzaMeshRefs", out obj))
-            {
                 meshrefs = obj as Dictionary<int, MultiTextureMeshRef>;
-            }
             else
-            {
                 capi.ObjectCache["pizzaMeshRefs"] = meshrefs = new Dictionary<int, MultiTextureMeshRef>();
-            }
-
             if (pizzaStack == null) return null;
-            
-            ItemStack[] contentStacks = (pizzaStack.Block as BlockPizza)?.GetContents(capi.World, pizzaStack);
-
+            ItemStack[] contents = (pizzaStack.Block as BlockPizza)?.GetContents(capi.World, pizzaStack);
             string extrakey = "ct" + "-bl" + pizzaStack.Attributes.GetAsInt("bakeLevel", 0) + "-ps" + pizzaStack.Attributes.GetAsInt("pizzaSize");
-
-            int mealhashcode = GetMealHashCode(pizzaStack.Block, contentStacks, null, extrakey);
-
+            int mealhashcode = GetMealHashCode(pizzaStack.Block, contents, null, extrakey);
             MultiTextureMeshRef mealMeshRef;
-
             if (!meshrefs.TryGetValue(mealhashcode, out mealMeshRef))
             {
-                LvCore.Logger.Warning("Creating new pizza mesh ref for {0}", mealhashcode);
                 MeshData mesh = GetPizzaMesh(pizzaStack);
                 if (mesh == null) return null;
                 meshrefs[mealhashcode] = mealMeshRef = capi.Render.UploadMultiTextureMesh(mesh);
@@ -153,10 +140,10 @@ namespace LaVerace.ModBlock
             
             if (ContentsRotten(contentStacks))
             {
-                baseTextureLoc = new AssetLocation("block/rot/rot");
-                sauceTextureLoc = new AssetLocation("block/rot/rot");
-                cheeseTextureLoc = new AssetLocation("block/rot/rot");
-                toppingsTextureLocs = new AssetLocation[] { new ("block/rot/rot"), new ("block/rot/rot"), new ("block/rot/rot") };
+                baseTextureLoc = new AssetLocation("game:block/rot/rot");
+                sauceTextureLoc = new AssetLocation("game:block/rot/rot");
+                cheeseTextureLoc = new AssetLocation("game:block/rot/rot");
+                toppingsTextureLocs = new AssetLocation[] { new ("game:block/rot/rot"), new ("game:block/rot/rot"), new ("game:block/rot/rot") };
             }
             else
             {
@@ -187,7 +174,7 @@ namespace LaVerace.ModBlock
             if (stackprops[2] != null) fillElements = fillElements.Concat(new [] {"mozzarella"}).ToArray();
             if (stackprops[3] != null || stackprops[4] != null || stackprops[5]!= null) fillElements = fillElements.Concat(new [] {"toppings"}).ToArray();
 
-            LvCore.Logger.Warning($"Filling elements: {string.Join(", ", fillElements)}");
+            // LvCore.Logger.Warning($"Filling elements: {string.Join(", ", fillElements)}");
             
             string[] selectiveElements = System.Array.Empty<string>();
             
@@ -195,7 +182,7 @@ namespace LaVerace.ModBlock
             {
                 for (int i = 0; i < pizzaSize; i++)
                 {
-                    LvCore.Logger.Warning($"Adding element " + $"origin/quarter{i + 1}/" + element + $"{i + 1}/*");
+                    // LvCore.Logger.Warning($"Adding element " + $"origin/quarter{i + 1}/" + element + $"{i + 1}/*");
                     selectiveElements = selectiveElements.Concat(new [] {$"origin/quarter{i + 1}/" + element + $"{i + 1}/*"}).ToArray();
                 }
             }
@@ -232,16 +219,6 @@ namespace LaVerace.ModBlock
             }
 
             return (shapestring + contentstring + extraKey).GetHashCode();
-        }
-        
-        private void Event_LeaveWorld()
-        {
-            object obj;
-            if (this.capi == null || !this.capi.ObjectCache.TryGetValue("pizzaMeshRefs", out obj))
-                return;
-            foreach (KeyValuePair<int, MultiTextureMeshRef> keyValuePair in (Dictionary<int, MultiTextureMeshRef>)obj)
-                keyValuePair.Value.Dispose();
-            this.capi.ObjectCache.Remove("pizzaMeshRefs");
         }
 
     }

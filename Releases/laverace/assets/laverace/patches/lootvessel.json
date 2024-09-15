@@ -1,0 +1,13 @@
+[
+  {
+    "file": "game:blocktypes/clay/lootvessel.json",
+    "op": "addeach",
+    "value": [
+      "laverace:seeds-tomato-cherry",
+      "laverace:seeds-tomato-sammarzano",
+      "laverace:seeds-tomato-oxheart"
+    ],
+    "path": "/attributes/lootListByType/*-seed/0/codes/-",
+    "side": "server"
+  }
+]

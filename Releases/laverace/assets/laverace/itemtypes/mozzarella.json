@@ -2,6 +2,11 @@
   "code": "mozzarella",
   "maxstacksize": 16,
   "attributes": {
+    "handbook": {
+      "extraSections": [
+        { "title": "laverace:handbooktitle-mozzarella", "text": "laverace:handbooktext-mozzarella" }
+      ]
+    },
     "displaycaseable": true,
     "shelvable": true,
     "inPieProperties": { "texture": "game:block/food/dairy/cottagecheese", "partType": "Filling"  },
