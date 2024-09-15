@@ -186,9 +186,20 @@ namespace LaVerace.ModBlock
                     selectiveElements = selectiveElements.Concat(new [] {$"origin/quarter{i + 1}/" + element + $"{i + 1}/*"}).ToArray();
                 }
             }
-            capi.Tesselator.TesselateShape("pizza", shape, out mesh, this, null, 0, 0, 0, null, selectiveElements);
-            if (transform != null) mesh.ModelTransform(transform);
-            return mesh;
+
+            try
+            {
+                capi.Tesselator.TesselateShape("pizza", shape, out mesh, this, null, 0, 0, 0, null, selectiveElements);
+                if (transform != null) mesh.ModelTransform(transform);
+                return mesh;
+            }
+            catch (Exception e)
+            {
+                LvCore.Logger.Error("Failed tesselating pizza mesh: {0}", e);
+                LvCore.Logger.Error("Shape: {0}", shape);
+                LvCore.Logger.Error("Selective elements: {0}", string.Join(", ", selectiveElements));
+                return null;
+            }
         }
         
         public static bool ContentsRotten(ItemStack[] contentStacks)

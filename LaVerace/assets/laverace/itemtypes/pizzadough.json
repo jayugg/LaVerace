@@ -3,6 +3,12 @@
   "class": "laverace.ItemPizzaDough",
   "maxstacksize": 32,
   "attributes": {
+    "handbook": {
+      "groupBy": ["dough-*"],
+      "extraSections": [
+        { "title": "laverace:handbooktitle-pizzadough", "text": "laverace:handbooktext-pizzadough" }
+      ]
+    },
     "displaycaseable": true,
     "shelvable": true,
     "bakingProperties": {
@@ -81,14 +87,22 @@
     "pineraw": {"base": "expandedfoods:item/food/dumpling/pineraw" },
     "mapleraw": {"base": "expandedfoods:item/food/dumpling/mapleraw" }
   },
-  "creativeinventoryStacks": [{
-    "tabs": [ "general", "items", "expandedfoods" ],
-    "stacks": [
-      { "type": "item", "code": "laverace:dough-{type}",
-        "attributes": { "madeWith": ["game:flour-{type}", "game:waterportion", "game:salt", "expandedfoods:foodoilportion-olive", "expandedfoods:breadstarter-wild" ] }
-      }
-    ]
-  }],
+  "creativeinventoryStacksByType": {
+    "*-flax": [{
+      "tabs": [ "general", "items", "expandedfoods" ],
+      "stacks": [
+        { "type": "item", "code": "laverace:dough-{type}" }
+      ]
+    }],
+    "*": [{
+      "tabs": [ "general", "items", "expandedfoods" ],
+      "stacks": [
+        { "type": "item", "code": "laverace:dough-{type}",
+          "attributes": { "madeWith": ["game:flour-{type}", "game:waterportion", "game:salt", "expandedfoods:foodoilportion-olive", "expandedfoods:breadstarter-wild" ] }
+        }
+      ]
+    }]
+  },
   "materialDensity": 200,
   "combustibleProps": {
     "meltingPoint": 200,

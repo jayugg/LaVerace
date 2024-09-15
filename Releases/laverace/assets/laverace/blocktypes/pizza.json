@@ -39,6 +39,11 @@
     ]
   },
   "attributes": {
+    "handbook": {
+      "extraSections": [
+        { "title": "laverace:handbooktitle-pizza", "text": "laverace:handbooktext-pizza" }
+      ]
+    },
     "bakingPropertiesByType": {
       "*-raw":  {
         "LargeItem": true,

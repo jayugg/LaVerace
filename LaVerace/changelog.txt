@@ -1,4 +1,3 @@
-- Fixed tomato, tomato sauce, mozzarella and mozzarella base handbook pages
-- Removed log spam
-- Added tomatoes in muffin dough recipe
-- Can find tomato seeds in loot vessels
+- Catched pizza handbook crash with certain mods
+- Pizza handbook page now links to baking guide
+- Pizza dough handbook page now links to baking guide
