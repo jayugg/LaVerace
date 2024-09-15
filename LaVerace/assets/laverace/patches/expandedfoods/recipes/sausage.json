@@ -1,0 +1,18 @@
+[
+  {
+    "op": "addeach",
+    "path": "/2/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:mozzarella", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/sausage.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/3/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:mozzarella", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/sausage.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  }
+]

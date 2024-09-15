@@ -1,0 +1,10 @@
+[
+  {
+    "op": "addeach",
+    "path": "/0/ingredients/0/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/soyculture.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  }
+]

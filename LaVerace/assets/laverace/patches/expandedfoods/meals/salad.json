@@ -1,0 +1,107 @@
+[
+  {
+    "op": "addeach",
+    "path": "/ingredients/1/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["fruit", "group3"]
+      }
+    ],
+    "file": "expandedfoods:recipes/mixing/salad.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/2/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 3/*",
+        "textureMapping": ["fruit", "group3"]
+      }
+    ],
+    "file": "expandedfoods:recipes/mixing/salad.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/3/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 4/*",
+        "textureMapping": ["fruit", "group3"]
+      }
+    ],
+    "file": "expandedfoods:recipes/mixing/salad.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/8/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomatosauceportion",
+        "shapeElement": "bowl/topping/*",
+        "textureMapping": ["topping", "group3"]
+      }
+    ],
+    "file": "game:recipes/mixing/salad.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/8/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomatosauceportion",
+        "shapeElement": "bowl/topping/*",
+        "textureMapping": ["topping", "group3"]
+      }
+    ],
+    "file": "game:recipes/mixing/salad.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/9/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:mozzarella",
+        "shapeElement": "bowl/cheese1/*",
+        "textureMapping": ["cheese", "group4"]
+      }
+    ],
+    "file": "game:recipes/mixing/salad.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/10/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:mozzarella",
+        "shapeElement": "bowl/cheese2/*",
+        "textureMapping": ["cheese", "group4"]
+      }
+    ],
+    "file": "game:recipes/mixing/salad.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "ingredients": [
+      {"inputs": [{ "type": "item", "code": "laverace:mozzarellabaseportion", "quantity": 50 }]}
+    ],
+    "output": { "type": "item", "code": "laverace:mozzarella", "stackSize": 1}
+  }
+]

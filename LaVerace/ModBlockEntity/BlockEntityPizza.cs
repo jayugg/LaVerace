@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text;
 using LaVerace.ModBlock;
+using LaVerace.Utility;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
@@ -9,6 +10,10 @@ using Vintagestory.GameContent;
 
 namespace LaVerace.ModBlockEntity
 {
+    public enum EnumPizzaContentSlot
+    {
+        Base, Sauce, Cheese, Topping1, Topping2, Topping3
+    }
     public enum EnumPizzaPartType
     {
         Base, Sauce, Cheese, Topping
@@ -20,6 +25,8 @@ namespace LaVerace.ModBlockEntity
         /// </summary>
         public EnumPizzaPartType PartType;
         public AssetLocation Texture;
+        public int Quantity = 1;
+        public float QuantityLitres = 0.25f;
         
         public static InPizzaProperties FromPie (InPieProperties pieProps)
         {
@@ -27,7 +34,9 @@ namespace LaVerace.ModBlockEntity
             return new InPizzaProperties()
             {
                 PartType = EnumPizzaPartType.Topping,
-                Texture = pieProps.Texture
+                Texture = pieProps.Texture,
+                Quantity = 1,
+                QuantityLitres = 0.25f
             };
         }
     }
@@ -45,9 +54,7 @@ namespace LaVerace.ModBlockEntity
     {
         InventoryGeneric inv;
         public override InventoryBase Inventory => inv;
-
         public override string InventoryClassName => "pizza";
-
 
         public bool HasAnyFilling
         {
@@ -141,8 +148,8 @@ namespace LaVerace.ModBlockEntity
                 {
                     blockPizza.SetContents(inv[0].Itemstack, cStacks);
                 }
-
             }
+            loadMesh();
         }
 
         public int SlicesLeft { 
@@ -189,7 +196,7 @@ namespace LaVerace.ModBlockEntity
 
         public void OnPlaced(IPlayer byPlayer)
         {
-            ItemStack doughStack = byPlayer.InventoryManager.ActiveHotbarSlot.TakeOut(2);
+            ItemStack doughStack = byPlayer.InventoryManager.ActiveHotbarSlot.TakeOut(1);
             if (doughStack == null) return;
 
             inv[0].Itemstack = new ItemStack(Block);
@@ -274,7 +281,7 @@ namespace LaVerace.ModBlockEntity
         private bool TryAddIngredientFrom(ItemSlot slot, IPlayer byPlayer = null)
         {
             var pizzaProps = slot.Itemstack.ItemAttributes?["inPizzaProperties"]?.AsObject<InPizzaProperties>(null, slot.Itemstack.Collectible.Code.Domain);
-
+            
             var containerFlag = false;
             var container = slot.Itemstack.Collectible as BlockLiquidContainerBase;
             
@@ -286,11 +293,10 @@ namespace LaVerace.ModBlockEntity
                 LvCore.Logger.Warning("Container content props: " + container.GetContent(slot.Itemstack)?.ItemAttributes?["inPizzaProperties"]);
                 containerFlag = true;
             }
+            LvCore.Logger.Warning("PizzaProps: " + pizzaProps);
 
             pizzaProps ??= InPizzaProperties.FromPie(slot.Itemstack.ItemAttributes?["inPieProperties"]
                 ?.AsObject<InPieProperties>(null, slot.Itemstack.Collectible.Code.Domain));
-            
-            if (slot.Itemstack.Collectible.Code.ToString().Contains("cheese")) pizzaProps.PartType = EnumPizzaPartType.Cheese;
             
             if (pizzaProps == null)
             {
@@ -298,15 +304,14 @@ namespace LaVerace.ModBlockEntity
                 return false;
             }
 
-            if (slot.StackSize < 2 && !containerFlag)
+            if (containerFlag && container.GetCurrentLitres(slot.Itemstack) < pizzaProps.QuantityLitres)
             {
-                if (byPlayer != null && capi != null) capi.TriggerIngameError(this, "notpizzaable", Lang.Get("Need at least 2 items each"));
+                if (byPlayer != null && capi != null) capi.TriggerIngameError(this, "notpizzaable", Lang.Get($"Need at least {pizzaProps.QuantityLitres} litres"));
                 return false;
             }
-
-            if (containerFlag && container.GetCurrentLitres(slot.Itemstack) < 0.5)
+            if (slot.Itemstack.StackSize < pizzaProps.Quantity)
             {
-                if (byPlayer != null && capi != null) capi.TriggerIngameError(this, "notpizzaable", Lang.Get("Need at least 0.5 litres"));
+                if (byPlayer != null && capi != null) capi.TriggerIngameError(this, "notpizzaable", Lang.Get($"Need at least {pizzaProps.Quantity} items"));
                 return false;
             }
 
@@ -320,33 +325,9 @@ namespace LaVerace.ModBlockEntity
             bool hasCheese = cStacks[2] != null;
             bool hasTopping = cStacks[3] != null || cStacks[4] != null || cStacks[5] != null;;
 
-            if (!hasSauce)
+            if (!hasSauce && pizzaProps.PartType == EnumPizzaPartType.Sauce)
             {
-                if (pizzaProps.PartType != EnumPizzaPartType.Sauce)
-                {
-                    if (byPlayer != null && capi != null)
-                        capi.TriggerIngameError(this, "pizzaneedssauce", Lang.Get("Need to add a sauce first"));
-                    return false;
-                }
-                else
-                {
-                    if (containerFlag)
-                    {
-                        var itemsPerLitre = container.GetContentProps(slot.Itemstack).ItemsPerLitre;
-                        var cStack = container.GetContent(slot.Itemstack).Clone();
-                        cStack.StackSize = (int)(itemsPerLitre * 0.5f);
-                        container.GetContent(slot.Itemstack).StackSize -= cStack.StackSize;
-                        cStacks[1] = cStack;
-                        pizzaBlock.SetContents(inv[0].Itemstack, cStacks);
-                        return true;
-                    }
-                    else
-                    {
-                        cStacks[1] = slot.TakeOut(2);
-                        pizzaBlock.SetContents(inv[0].Itemstack, cStacks);
-                        return true;
-                    }
-                }
+                return AddIngredientFromSlot(slot, pizzaProps, EnumPizzaContentSlot.Sauce, pizzaBlock, containerFlag, byPlayer);
             }
             
             if (isFull)
@@ -355,30 +336,64 @@ namespace LaVerace.ModBlockEntity
                 return false;
             }
 
+            /*
             if (hasCheese && pizzaProps.PartType != EnumPizzaPartType.Topping)
             {
                 if (byPlayer != null && capi != null) capi.TriggerIngameError(this, "pizzaneedstopping", Lang.Get("Need to add a topping next"));
                 return false;
             }
+            */
 
             if (!hasCheese && pizzaProps.PartType == EnumPizzaPartType.Cheese)
             {
-                cStacks[2] = slot.TakeOut(2);
-                pizzaBlock.SetContents(inv[0].Itemstack, cStacks);
-                return true;
+                return AddIngredientFromSlot(slot, pizzaProps, EnumPizzaContentSlot.Cheese, pizzaBlock, containerFlag, byPlayer);
             }
 
             if (!hasTopping)
             {
-                cStacks[3] = slot.TakeOut(2);
+                return AddIngredientFromSlot(slot, pizzaProps, EnumPizzaContentSlot.Topping1, pizzaBlock, containerFlag, byPlayer);
+            }
+            if (cStacks[5] != null)
+            {
+                if (byPlayer != null && capi != null) capi.TriggerIngameError(this, "pizzafullfilling", Lang.Get("Can't add more filling - already completely filled pizza"));
+            }
+            int emptySlotIndex = 3 + (cStacks[3] != null ? 1 + (cStacks[4] != null ? 1 : 0) : 0);
+            AddIngredientFromSlot(slot, pizzaProps, (EnumPizzaContentSlot) emptySlotIndex, pizzaBlock, containerFlag, byPlayer);
+            return true;
+        }
+
+        private bool AddIngredientFromSlot(ItemSlot slot, InPizzaProperties pizzaProps, EnumPizzaContentSlot contentSlot, BlockPizza pizzaBlock, bool containerFlag, IPlayer byPlayer)
+        {
+            ItemStack[] cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
+            if (containerFlag && slot.Itemstack.Collectible is BlockLiquidContainerBase container)
+            {
+                if (slot.Itemstack.Collectible is not ILiquidSource { AllowHeldLiquidTransfer: true })
+                {
+                    return false;
+                }
+                var quantity = pizzaProps.QuantityLitres;
+                var cStack = container.GetContent(slot.Itemstack).Clone();
+                var itemsPerLitre = container.GetContentProps(slot.Itemstack).ItemsPerLitre;
+                var moved = (int)(quantity * itemsPerLitre);
+                
+                container.CallMethod<int>("splitStackAndPerformAction", byPlayer.Entity, slot, delegate (ItemStack stack)
+                {
+                    container.TryTakeContent(stack, moved);
+                    return moved;
+                });
+
+                cStack.StackSize = moved;
+                container.DoLiquidMovedEffects(byPlayer, cStack, moved, BlockLiquidContainerBase.EnumLiquidDirection.Pour);
+                cStacks[(int) contentSlot] = cStack;
                 pizzaBlock.SetContents(inv[0].Itemstack, cStacks);
                 return true;
             }
-            int emptySlotIndex = 3 + (cStacks[3] != null ? 1 + (cStacks[4] != null ? 1 : 0) : 0);
-            
-            cStacks[emptySlotIndex] = slot.TakeOut(2);
-            pizzaBlock.SetContents(inv[0].Itemstack, cStacks);
-            return true;
+            else
+            {
+                cStacks[(int) contentSlot] = slot.TakeOut(pizzaProps.Quantity);
+                pizzaBlock.SetContents(inv[0].Itemstack, cStacks);
+                return true;
+            }
         }
 
         public override bool OnTesselation(ITerrainMeshPool mesher, ITesselatorAPI tessThreadTesselator)
@@ -406,8 +421,7 @@ namespace LaVerace.ModBlockEntity
                 dsc.Append(BlockEntityShelf.PerishableInfoCompact(Api, inv[0], 0, false));
             }
         }
-
-
+        
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldForResolving)
         {
             base.FromTreeAttributes(tree, worldForResolving);

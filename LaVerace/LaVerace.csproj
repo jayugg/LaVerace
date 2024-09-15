@@ -68,10 +68,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="assets\laverace\patches\" />
+      <Folder Include="assets\laverace\patches\expandedfoods\items\mixing\" />
       <Folder Include="assets\laverace\shapes\block\" />
       <Folder Include="assets\laverace\shapes\block\pizza\" />
-      <Folder Include="assets\laverace\textures\block\tomatobush\" />
+      <Folder Include="assets\laverace\textures\block\food\" />
+      <Folder Include="assets\laverace\textures\block\plant\crop\" />
     </ItemGroup>
 
 </Project>

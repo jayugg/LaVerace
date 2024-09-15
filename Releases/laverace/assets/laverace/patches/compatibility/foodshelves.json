@@ -1,0 +1,22 @@
+[
+  {
+    "op": "addeach",
+    "path": "/PieShelfCodes/-",
+    "value": ["*pizza-*"],
+    "side": "Server",
+    "file": "foodshelves:config/restrictions/shelves/pieshelf.json",
+    "dependsOn": [ { "modid": "foodshelves" } ]
+  },
+  {
+    "op": "addmerge",
+    "path": "/*pizza-*",
+    "value": {
+      "translation": { "x": 0, "y": 0.01, "z": 0 },
+      "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+      "scale": 0.8
+    },
+    "side": "Server",
+    "file": "foodshelves:config/transformations/shelves/pieshelf.json",
+    "dependsOn": [ { "modid": "foodshelves" } ]
+  }
+]

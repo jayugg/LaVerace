@@ -1,0 +1,42 @@
+[
+  {
+    "op": "addeach",
+    "path": "/7/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:mozzarella", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/wildcraftherb/sausageherb.json",
+    "dependsOn": [ { "modid": "expandedfoods" }, { "modid": "wildcraftherb" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/8/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:mozzarella", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/wildcraftherb/sausageherb.json",
+    "dependsOn": [ { "modid": "expandedfoods" }, { "modid": "wildcraftherb" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/9/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:mozzarella", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/wildcraftherb/sausageherb.json",
+    "dependsOn": [ { "modid": "expandedfoods" }, { "modid": "wildcraftherb" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/10/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:mozzarella", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/wildcraftherb/sausageherb.json",
+    "dependsOn": [ { "modid": "expandedfoods" }, { "modid": "wildcraftherb" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/11/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:mozzarella", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/wildcraftherb/sausageherb.json",
+    "dependsOn": [ { "modid": "expandedfoods" }, { "modid": "wildcraftherb" } ]
+  }
+]

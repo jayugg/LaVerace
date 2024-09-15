@@ -24,10 +24,9 @@ public class LvCore : ModSystem
     public override void Start(ICoreAPI api)
     {
         api.RegisterBlockClass($"{Modid}.{nameof(BlockPizza)}", typeof(BlockPizza));
-        api.RegisterBlockClass($"{Modid}.{nameof(BlockDoughForm)}", typeof(BlockDoughForm));
         api.RegisterBlockEntityClass($"{Modid}.{nameof(BlockEntityPizza)}", typeof(BlockEntityPizza));
-        api.RegisterBlockEntityClass($"{Modid}.{nameof(BlockEntityDoughForm)}", typeof(BlockEntityDoughForm));
         api.RegisterItemClass($"{Modid}.{nameof(ItemPizzaDough)}", typeof(ItemPizzaDough));
+        api.RegisterItemClass($"{Modid}.{nameof(ItemExpandedPlantableSeed)}", typeof(ItemExpandedPlantableSeed));
     }
 
     public override void StartServerSide(ICoreServerAPI api)

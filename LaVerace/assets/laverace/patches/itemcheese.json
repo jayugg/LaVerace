@@ -1,0 +1,12 @@
+[
+  {
+    "op": "addmerge",
+    "path": "/attributes/inPizzaPropertiesByType",
+    "value": {
+        "*-cheddar-1slice": { "texture": "game:block/food/pie/fill-cheddar", "partType": "Cheese" },
+        "*-blue-1slice": { "texture": "game:block/food/pie/fill-bluecheese", "partType": "Cheese" }
+    },
+    "file": "game:itemtypes/food/cheese.json",
+    "side": "server"
+  }
+]

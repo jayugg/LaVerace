@@ -1,0 +1,117 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textureSizes": {},
+	"textures": {},
+	"elements": [
+		{
+			"name": "cube",
+			"from": [5.9, 0, 6.15],
+			"to": [9.6, 2.25, 9.85],
+			"rotationOrigin": [7.75, 1.75, 8],
+			"faces": {
+				"north": {
+					"texture": "#null",
+					"uv": [0, 0, 2.5, 2.5]
+				},
+				"east": {
+					"texture": "#null",
+					"uv": [0, 0, 2.5, 2.5]
+				},
+				"south": {
+					"texture": "#null",
+					"uv": [0, 4, 2.5, 6.5]
+				},
+				"west": {
+					"texture": "#null",
+					"uv": [0, 0, 2.5, 2.5]
+				},
+				"up": {
+					"texture": "#null",
+					"uv": [3.75, 3.75, 0, 0]
+				},
+				"down": {
+					"texture": "#null",
+					"uv": [2.5, 4, 0, 6.5]
+				}
+			},
+			"children": [],
+			"rotationX": 0,
+			"rotationY": 0,
+			"rotationZ": 0
+		},
+		{
+			"name": "cube",
+			"from": [6.05, 2.2375, 6.3],
+			"to": [9.45, 3.6375, 9.7],
+			"rotationOrigin": [7.75, 2.2, 8],
+			"faces": {
+				"north": {
+					"texture": "#null",
+					"uv": [4, 0.5, 6.5, 2]
+				},
+				"east": {
+					"texture": "#null",
+					"uv": [4, 1, 6.5, 2.5]
+				},
+				"south": {
+					"texture": "#null",
+					"uv": [4, 0, 6.5, 1.5]
+				},
+				"west": {
+					"texture": "#null",
+					"uv": [4, 0.5, 6.5, 2]
+				},
+				"up": {
+					"texture": "#null",
+					"uv": [6.5, 6.5, 4, 4]
+				},
+				"down": {
+					"texture": "#null",
+					"uv": [0, 0, 3.4, 3.4]
+				}
+			},
+			"children": [],
+			"rotationX": 0,
+			"rotationY": 0,
+			"rotationZ": 0
+		},
+		{
+			"name": "cube",
+			"from": [7.575, 3.3875, 7.75],
+			"to": [8.025, 3.9875, 8.2],
+			"rotationOrigin": [7.425, 3.6375, 8.6],
+			"faces": {
+				"north": {
+					"texture": "#null",
+					"uv": [5, 4.5, 5.35, 5.25]
+				},
+				"east": {
+					"texture": "#null",
+					"uv": [5, 4.5, 5.35, 5.25]
+				},
+				"south": {
+					"texture": "#null",
+					"uv": [5, 4.5, 5.35, 5.25]
+				},
+				"west": {
+					"texture": "#null",
+					"uv": [5, 5, 5.35, 5.75]
+				},
+				"up": {
+					"texture": "#null",
+					"uv": [5, 4.5, 5.35, 4.85]
+				},
+				"down": {
+					"texture": "#null",
+					"uv": [5, 4.5, 5.35, 4.85]
+				}
+			},
+			"children": [],
+			"rotationX": 7.5,
+			"rotationY": 0,
+			"rotationZ": 0
+		}
+	],
+	"animations": []
+}

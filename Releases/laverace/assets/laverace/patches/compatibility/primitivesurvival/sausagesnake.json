@@ -1,0 +1,18 @@
+[
+  {
+    "op": "addeach",
+    "path": "/2/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:mozzarella", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/primitivesurvival/sausagesnake.json",
+    "dependsOn": [ { "modid": "expandedfoods" }, { "modid": "primitivesurvival" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/3/ingredients/2/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:mozzarella", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/primitivesurvival/sausagesnake.json",
+    "dependsOn": [ { "modid": "expandedfoods" }, { "modid": "primitivesurvival" } ]
+  }
+]

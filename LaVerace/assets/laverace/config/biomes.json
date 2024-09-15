@@ -1,0 +1,8 @@
+{
+  "BlockPatchBiomes": {
+    "*-tomato-*": [
+      "atlantic neotropic",
+      "pacific neotropic"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+[
+  {
+    "op": "addeach",
+    "path": "/ingredients/3/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 1/*",
+        "textureMapping": ["fruit", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-sammarzano",
+        "shapeElement": "bowl/vegetable 1/*",
+        "textureMapping": ["vegetable", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-oxheart",
+        "shapeElement": "bowl/vegetable 1/*",
+        "textureMapping": ["vegetable", "group3"]
+      }
+    ],
+    "file": "game:recipes/cooking/porridge.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "aculinaryartillery" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/4/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["fruit", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-sammarzano",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["vegetable", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-oxheart",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["vegetable", "group3"]
+      }
+    ],
+    "file": "game:recipes/cooking/porridge.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "aculinaryartillery" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/5/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:mozzarella",
+        "shapeElement": "bowl/cheese1/*",
+        "textureMapping": ["topping", "group4"]
+      }
+    ],
+    "file": "game:recipes/cooking/porridge.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "aculinaryartillery" }]
+  }
+]

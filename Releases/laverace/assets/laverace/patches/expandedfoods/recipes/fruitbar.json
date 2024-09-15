@@ -1,0 +1,18 @@
+[
+  {
+    "op": "addeach",
+    "path": "/0/ingredients/1/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/fruitbar.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  },
+  {
+    "op": "addeach",
+    "path": "/1/ingredients/1/inputs/-",
+    "value": [{ "type": "item", "code": "laverace:tomato-*", "quantity": 1 }],
+    "side": "Server",
+    "file": "expandedfoods:recipes/kneading/fruitbar.json",
+    "dependsOn": [ { "modid": "expandedfoods" } ]
+  }
+]

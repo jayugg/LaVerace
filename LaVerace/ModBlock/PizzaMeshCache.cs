@@ -1,13 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using LaVerace.ModBlockEntity;
 using LaVerace.ModItem;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
-using Vintagestory.API.Util;
-using Vintagestory.GameContent;
 
 namespace LaVerace.ModBlock
 {
@@ -16,6 +14,13 @@ namespace LaVerace.ModBlock
         public override bool ShouldLoad(EnumAppSide forSide)
         {
             return forSide == EnumAppSide.Client;
+        }
+        
+        public override void StartClientSide(ICoreClientAPI api)
+        {
+            base.StartClientSide(api);
+            this.capi = api;
+            api.Event.LeaveWorld += new Action(this.Event_LeaveWorld);
         }
 
         ICoreClientAPI capi;
@@ -82,17 +87,9 @@ namespace LaVerace.ModBlock
             }
         }
 
-        public override void StartClientSide(ICoreClientAPI api)
-        {
-            base.StartClientSide(api);
-            capi = api;
-        }
-
-
         public MultiTextureMeshRef GetOrCreatePizzaMeshRef(ItemStack pizzaStack)
         {
             Dictionary<int, MultiTextureMeshRef> meshrefs;
-
             object obj;
             if (capi.ObjectCache.TryGetValue("pizzaMeshRefs", out obj))
             {
@@ -115,12 +112,11 @@ namespace LaVerace.ModBlock
 
             if (!meshrefs.TryGetValue(mealhashcode, out mealMeshRef))
             {
+                LvCore.Logger.Warning("Creating new pizza mesh ref for {0}", mealhashcode);
                 MeshData mesh = GetPizzaMesh(pizzaStack);
                 if (mesh == null) return null;
-
                 meshrefs[mealhashcode] = mealMeshRef = capi.Render.UploadMultiTextureMesh(mesh);
             }
-
             return mealMeshRef;
         }
 
@@ -203,10 +199,8 @@ namespace LaVerace.ModBlock
                     selectiveElements = selectiveElements.Concat(new [] {$"origin/quarter{i + 1}/" + element + $"{i + 1}/*"}).ToArray();
                 }
             }
-
             capi.Tesselator.TesselateShape("pizza", shape, out mesh, this, null, 0, 0, 0, null, selectiveElements);
             if (transform != null) mesh.ModelTransform(transform);
-
             return mesh;
         }
         
@@ -239,7 +233,16 @@ namespace LaVerace.ModBlock
 
             return (shapestring + contentstring + extraKey).GetHashCode();
         }
-
+        
+        private void Event_LeaveWorld()
+        {
+            object obj;
+            if (this.capi == null || !this.capi.ObjectCache.TryGetValue("pizzaMeshRefs", out obj))
+                return;
+            foreach (KeyValuePair<int, MultiTextureMeshRef> keyValuePair in (Dictionary<int, MultiTextureMeshRef>)obj)
+                keyValuePair.Value.Dispose();
+            this.capi.ObjectCache.Remove("pizzaMeshRefs");
+        }
 
     }
 }

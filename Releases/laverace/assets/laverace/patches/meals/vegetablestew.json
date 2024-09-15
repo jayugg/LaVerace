@@ -1,0 +1,110 @@
+[
+  {
+    "op": "addeach",
+    "path": "/ingredients/0/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 1/*",
+        "textureMapping": ["fruit", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-sammarzano",
+        "shapeElement": "bowl/vegetable 1/*",
+        "textureMapping": ["vegetable", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-oxheart",
+        "shapeElement": "bowl/vegetable 1/*",
+        "textureMapping": ["vegetable", "group3"]
+      }
+    ],
+    "file": "game:recipes/cooking/vegetablestew.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "aculinaryartillery" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/1/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["fruit", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-sammarzano",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["vegetable", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-oxheart",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["vegetable", "group3"]
+      }
+    ],
+    "file": "game:recipes/cooking/vegetablestew.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "aculinaryartillery" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/2/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 3/*",
+        "textureMapping": ["fruit", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-sammarzano",
+        "shapeElement": "bowl/vegetable 3/*",
+        "textureMapping": ["vegetable", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-oxheart",
+        "shapeElement": "bowl/vegetable 3/*",
+        "textureMapping": ["vegetable", "group3"]
+      }
+    ],
+    "file": "game:recipes/cooking/vegetablestew.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "aculinaryartillery" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/3/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 4/*",
+        "textureMapping": ["fruit", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-sammarzano",
+        "shapeElement": "bowl/vegetable 4/*",
+        "textureMapping": ["vegetable", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-oxheart",
+        "shapeElement": "bowl/vegetable 4/*",
+        "textureMapping": ["vegetable", "group3"]
+      }
+    ],
+    "file": "game:recipes/cooking/vegetablestew.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "aculinaryartillery" }]
+  }
+]

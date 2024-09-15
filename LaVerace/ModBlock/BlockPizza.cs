@@ -19,7 +19,7 @@ namespace LaVerace.ModBlock
     // [1] = sauce
     // [2] = cheese
     // [3-5] = toppings
-    public class BlockPizza : BlockMeal, IBakeableCallback, ITablePlaceable
+    public class BlockPizza : BlockMeal, IBakeableCallback
     {
         public string State => Variant["state"];
         protected override bool PlacedBlockEating => false;
@@ -37,22 +37,48 @@ namespace LaVerace.ModBlock
             interactions = ObjectCacheUtil.GetOrCreate(api, "pizzaInteractions-", () =>
             {
                 var knifeStacks = BlockUtil.GetKnifeStacks(api);
-                List<ItemStack> fillStacks = new List<ItemStack>();
-                List<ItemStack> doughStacks = new List<ItemStack>();
+                List<ItemStack> sauceStacks = new List<ItemStack>();
+                List<ItemStack> toppingStacks = new List<ItemStack>();
+                List<ItemStack> cheeseStacks = new List<ItemStack>();
 
-                if (fillStacks.Count == 0 && doughStacks.Count == 0)
+                if (sauceStacks.Count == 0)
                 {
                     foreach (CollectibleObject obj in api.World.Collectibles)
                     {
-                        if (obj is ItemDough)
-                        {
-                            doughStacks.Add(new ItemStack(obj, 2));
-                        }
-
                         var pizzaProps = obj.Attributes?["inPizzaProperties"]?.AsObject<InPizzaProperties>(null, obj.Code.Domain);
-                        if (pizzaProps != null && !(obj is ItemDough))
+                        if (pizzaProps is { PartType: EnumPizzaPartType.Sauce })
                         {
-                            fillStacks.Add(new ItemStack(obj, 2));
+                            sauceStacks.Add(new ItemStack(obj, 1));
+                        }
+                    }
+                }
+                
+                if (toppingStacks.Count == 0)
+                {
+                    foreach (CollectibleObject obj in api.World.Collectibles)
+                    {
+                        var pizzaProps = obj.Attributes?["inPizzaProperties"]?.AsObject<InPizzaProperties>(null, obj.Code.Domain);
+                        if (pizzaProps == null)
+                        {
+                            pizzaProps = InPizzaProperties.FromPie(obj.Attributes?["inPieProperties"]
+                                ?.AsObject<InPieProperties>(null, obj.Code.Domain));
+                        }
+                        if (pizzaProps is { PartType: EnumPizzaPartType.Topping })
+                        {
+                            toppingStacks.Add(new ItemStack(obj, 1));
+                        }
+                        
+                    }
+                }
+                
+                if (cheeseStacks.Count == 0)
+                {
+                    foreach (CollectibleObject obj in api.World.Collectibles)
+                    {
+                        var pizzaProps = obj.Attributes?["inPizzaProperties"]?.AsObject<InPizzaProperties>(null, obj.Code.Domain);
+                        if (pizzaProps is { PartType: EnumPizzaPartType.Cheese })
+                        {
+                            cheeseStacks.Add(new ItemStack(obj, 1));
                         }
                     }
                 }
@@ -61,7 +87,7 @@ namespace LaVerace.ModBlock
                 {
                     new WorldInteraction()
                     {
-                        ActionLangCode = "blockhelp-pizza-cut",
+                        ActionLangCode = $"{LvCore.Modid}:blockhelp-pizza-cut",
                         MouseButton = EnumMouseButton.Right,
                         Itemstacks = knifeStacks,
                         GetMatchingStacks = (wi, bs, es) => {
@@ -75,13 +101,43 @@ namespace LaVerace.ModBlock
                     },
                     new WorldInteraction()
                     {
-                        ActionLangCode = "blockhelp-pizza-addfilling",
+                        ActionLangCode = $"{LvCore.Modid}:blockhelp-pizza-addsauce",
                         MouseButton = EnumMouseButton.Right,
-                        Itemstacks = fillStacks.ToArray(),
+                        Itemstacks = sauceStacks.ToArray(),
                         GetMatchingStacks = (wi, bs, es) =>
                         {
                             BlockEntityPizza bec = api.World.BlockAccessor.GetBlockEntity(bs.Position) as BlockEntityPizza;
-                            if (bec?.Inventory[0]?.Itemstack != null && (bec.Inventory[0].Itemstack.Collectible as BlockPizza)?.State == "raw" && !bec.HasAllFilling)
+                            if (bec?.Inventory[0]?.Itemstack != null && (bec.Inventory[0].Itemstack.Collectible as BlockPizza)?.State == "raw" && !bec.HasSauce)
+                            {
+                                return wi.Itemstacks;
+                            }
+                            return null;
+                        }
+                    },
+                    new WorldInteraction()
+                    {
+                        ActionLangCode = $"{LvCore.Modid}:blockhelp-pizza-addtopping",
+                        MouseButton = EnumMouseButton.Right,
+                        Itemstacks = toppingStacks.ToArray(),
+                        GetMatchingStacks = (wi, bs, es) =>
+                        {
+                            BlockEntityPizza bec = api.World.BlockAccessor.GetBlockEntity(bs.Position) as BlockEntityPizza;
+                            if (bec?.Inventory[0]?.Itemstack != null && (bec.Inventory[0].Itemstack.Collectible as BlockPizza)?.State == "raw" && !bec.HasAllFilling && bec.HasSauce)
+                            {
+                                return wi.Itemstacks;
+                            }
+                            return null;
+                        }
+                    },
+                    new WorldInteraction()
+                    {
+                        ActionLangCode = $"{LvCore.Modid}:blockhelp-pizza-addcheese",
+                        MouseButton = EnumMouseButton.Right,
+                        Itemstacks = cheeseStacks.ToArray(),
+                        GetMatchingStacks = (wi, bs, es) =>
+                        {
+                            BlockEntityPizza bec = api.World.BlockAccessor.GetBlockEntity(bs.Position) as BlockEntityPizza;
+                            if (bec?.Inventory[0]?.Itemstack != null && (bec.Inventory[0].Itemstack.Collectible as BlockPizza)?.State == "raw" && !bec.HasAllFilling && bec.HasSauce)
                             {
                                 return wi.Itemstacks;
                             }
@@ -139,7 +195,6 @@ namespace LaVerace.ModBlock
             Scale = 0.7f,
             Rotation = new Vec3f(-49, 29, -112)
         }.EnsureDefaultValues();
-
 
         public override void OnBeforeRender(ICoreClientAPI capi, ItemStack itemstack, EnumItemRenderTarget target, ref ItemRenderInfo renderinfo)
         {
@@ -256,8 +311,13 @@ namespace LaVerace.ModBlock
             bepizza?.OnPlaced(byPlayer);
         }
 
+        public override void GetDecal(IWorldAccessor world, BlockPos pos, ITexPositionSource decalTexSource, ref MeshData decalModelData,
+            ref MeshData blockModelData)
+        {
+            return; // No block breaking decal
+            base.GetDecal(world, pos, decalTexSource, ref decalModelData, ref blockModelData);
+        }
 
-        
         public override string GetPlacedBlockName(IWorldAccessor world, BlockPos pos)
         {
             BlockEntityPizza bec = world.BlockAccessor.GetBlockEntity(pos) as BlockEntityPizza;
@@ -268,47 +328,77 @@ namespace LaVerace.ModBlock
 
         public override string GetHeldItemName(ItemStack itemStack)
         {
-            ItemStack[] cStacks = GetContents(api.World, itemStack);
-            if (cStacks.Length <= 1) return Lang.Get("pizza-empty");
-
-            ItemStack cstack = cStacks[1];
-
-            if (cstack == null) return Lang.Get("pizza-empty");
-
-            bool equal = true;
-            for (int i = 2; equal && i < cStacks.Length - 1; i++)
+            ItemStack[] contents = this.GetContents(this.api.World, itemStack);
+            if (contents.Length <= 1)
+                return Lang.Get($"{LvCore.Modid}:pizza-empty");
+            return Lang.Get($"{LvCore.Modid}:pizza-" + State);
+        }
+        
+        public void ListIngredients(
+            ItemSlot inSlot,
+            StringBuilder dsc,
+            IWorldAccessor world,
+            bool withDebugInfo)
+        {
+            string str1 = Lang.Get("efrecipes:Made with ");
+            ItemStack[] cStacks = GetContents(api.World, inSlot?.Itemstack);
+            if (cStacks is not { Length: > 1 }) return;
+            List<string> codeList = new List<string>();
+            List<string> stringList = new List<string>();
+            foreach (var stack in cStacks)
             {
-                if (cStacks[i] == null) continue;
-
-                equal &= cstack.Equals(api.World, cStacks[i], GlobalConstants.IgnoredStackAttributes);
-                cstack = cStacks[i];
+                if (stack == null) continue;
+                if (stack.Collectible is ItemExpandedRawFood)
+                {
+                    string[] strArray = stack.Attributes["madeWith"] is StringArrayAttribute attribute
+                        ? attribute.value
+                        : (string[])null;
+                    if (strArray == null) continue;
+                    codeList.AddRange(strArray);
+                } else 
+                {
+                    AssetLocation blockCode = stack?.Collectible.Code;
+                    if (blockCode != null) codeList.Add(blockCode.ToString());
+                }
             }
-
-            string state = Variant["state"];
-
-            if (MealMeshCache.ContentsRotten(cStacks))
+            foreach (var codeString in codeList)
             {
-                return Lang.Get("pizza-single-rotten");
+                if (codeString != null)
+                {
+                    var code = new AssetLocation(codeString);
+                    var blockOrItem = world.GetBlock(code) != null ? "block-" : "item-";
+                    string ifExists = Lang.GetIfExists($"{code.Domain}:recipeingredient-" + blockOrItem + code.Path);
+                    if (ifExists == null) ifExists = Lang.GetIfExists("recipeingredient-" + blockOrItem + code.Path);
+                    if (ifExists == null) ifExists = Lang.Get("recipeingredient-" + blockOrItem + code.Path + "-insturmentalcase");
+                    if (ifExists != null && !stringList.Contains(ifExists))
+                        stringList.Add(ifExists);
+                }
             }
-
-            if (equal)
+            
+            string[] array = stringList.ToArray();
+            if (array.Length < 1)
+                return;
+            if (array.Length < 2)
             {
-                return Lang.Get("pizza-single-" + cstack.Collectible.Code.ToShortString() + "-" + state);
-            } else
+                string str2 = str1 + array[0];
+                dsc.AppendLine(str2);
+            }
+            else
             {
-                EnumFoodCategory fillingFoodCat =
-                    cStacks[1].Collectible.NutritionProps?.FoodCategory
-                    ?? cStacks[1].ItemAttributes?["nutritionPropsWhenInMeal"]?.AsObject<FoodNutritionProperties>()?.FoodCategory
-                    ?? EnumFoodCategory.Vegetable
-                ;
-
-                return Lang.Get("pizza-mixed-" + fillingFoodCat.ToString().ToLowerInvariant() + "-" + state);
-            }           
+                for (int index = 0; index < array.Length; ++index)
+                {
+                    AssetLocation blockCode = new AssetLocation(array[index]);
+                    world.GetBlock(blockCode);
+                    str1 = index + 1 != array.Length ? str1 + array[index] + ", " : str1 + Lang.Get("efrecipes:and ") + array[index];
+                }
+                dsc.AppendLine(str1);
+            }
         }
 
 
         public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
         {
+            this.ListIngredients(inSlot, dsc, world, withDebugInfo);
             int pizzaSie = inSlot.Itemstack.Attributes.GetAsInt("pizzaSize");
             ItemStack pizzaStack = inSlot.Itemstack;
             float servingsLeft = GetQuantityServings(world, inSlot.Itemstack);
@@ -360,9 +450,16 @@ namespace LaVerace.ModBlock
 
             float[] nmul = GetNutritionHealthMul(pos, null, forPlayer.Entity);
 
-            if (mealblock != null)
-                sb.AppendLine(mealblock.GetContentNutritionFacts(api.World, bep.Inventory[0], stacks, null, true,
-                    nmul[0] * servingsLeft, nmul[1] * servingsLeft));
+            try
+            {
+                if (mealblock != null)
+                    sb.AppendLine(mealblock.GetContentNutritionFacts(api.World, bep.Inventory[0], stacks, null, true,
+                        nmul[0] * servingsLeft, nmul[1] * servingsLeft));
+            }
+            catch (Exception e)
+            {
+                sb.AppendLine("Error: " + e.Message);
+            }
 
             return sb.ToString();
         }

@@ -1,0 +1,35 @@
+[
+  {
+    "comment": "Small patches of cherry tomatoes",
+    "blockCodes": ["crop-tomato-cherry-4", "crop-tomato-cherry-6", "crop-tomato-cherry-8", "crop-tomato-cherry-9", "crop-tomato-cherry-2", "crop-tomato-cherry-10"],
+    "minTemp": 5,
+    "maxTemp": 26,
+    "minRain": 0.15,
+    "maxRain": 0.65,
+    "maxForest": 0.6,
+    "quantity": { "avg": 5, "var": 3 },
+    "chance": 0.036
+  },
+  {
+    "comment": "Small patches of sammarzano tomatoes",
+    "blockCodes": ["crop-tomato-sammarzano-4", "crop-tomato-sammarzano-6", "crop-tomato-sammarzano-8", "crop-tomato-sammarzano-9", "crop-tomato-sammarzano-2", "crop-tomato-sammarzano-10"],
+    "minTemp": 5,
+    "maxTemp": 26,
+    "minRain": 0.30,
+    "maxRain": 0.80,
+    "maxForest": 0.3,
+    "quantity": { "avg": 3, "var": 1 },
+    "chance": 0.036
+  },
+  {
+    "comment": "Small patches of oxheart tomatoes",
+    "blockCodes": ["crop-tomato-oxheart-4", "crop-tomato-oxheart-6", "crop-tomato-oxheart-8", "crop-tomato-oxheart-9", "crop-tomato-oxheart-2", "crop-tomato-oxheart-10"],
+    "minTemp": 5,
+    "maxTemp": 26,
+    "minRain": 0.25,
+    "maxRain": 0.75,
+    "maxForest": 0.2,
+    "quantity": { "avg": 2, "var": 1 },
+    "chance": 0.036
+  }
+]

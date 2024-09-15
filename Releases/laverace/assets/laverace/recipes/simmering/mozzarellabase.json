@@ -1,0 +1,76 @@
+[
+  {
+    "Ingredients": [
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 100 }
+    ],
+    "Simmering": {
+      "meltingPoint": 200,
+      "meltingDuration": 110,
+      "smeltedRatio": 1,
+      "smeltingType": "bake",
+      "smeltedStack": {
+        "type": "item",
+        "code": "laverace:mozzarellabaseportion",
+        "quantity":  50
+      },
+      "requiresContainer": false
+    }
+  },
+  {
+    "Ingredients": [
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 50 },
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 50 }
+    ],
+    "Simmering": {
+      "meltingPoint": 200,
+      "meltingDuration": 110,
+      "smeltedRatio": 1,
+      "smeltingType": "bake",
+      "smeltedStack": {
+        "type": "item",
+        "code": "laverace:mozzarellabaseportion",
+        "quantity":  50
+      },
+      "requiresContainer": false
+    }
+  },
+  {
+    "Ingredients": [
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 30 },
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 30 },
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 30 }
+    ],
+    "Simmering": {
+      "meltingPoint": 200,
+      "meltingDuration": 110,
+      "smeltedRatio": 1,
+      "smeltingType": "bake",
+      "smeltedStack": {
+        "type": "item",
+        "code": "laverace:mozzarellabaseportion",
+        "quantity":  45
+      },
+      "requiresContainer": false
+    }
+  },
+  {
+    "Ingredients": [
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 25 },
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 25 },
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 25 },
+      { "type": "item", "code": "game:curdledmilkportion", "quantity": 25 }
+    ],
+    "Simmering": {
+      "meltingPoint": 200,
+      "meltingDuration": 110,
+      "smeltedRatio": 1,
+      "smeltingType": "bake",
+      "smeltedStack": {
+        "type": "item",
+        "code": "laverace:mozzarellabaseportion",
+        "quantity":  50
+      },
+      "requiresContainer": false
+    }
+  }
+]

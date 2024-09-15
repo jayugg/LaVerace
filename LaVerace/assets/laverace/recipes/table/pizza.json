@@ -1,4 +1,0 @@
-{
-  "doughtype": { "type": "item", "code": "laverace:dough-*",  "quantity": 2 },
-  "output": { "type": "block", "code": "laverace:pizza-raw",  "quantity": 1 }
-}

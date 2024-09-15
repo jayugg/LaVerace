@@ -1,0 +1,71 @@
+[
+  {
+    "op": "addeach",
+    "path": "/ingredients/0/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:mozzarella",
+        "shapeElement": "bowl/cheese*",
+        "textureMapping": ["cheese", "group4"]
+      }
+    ],
+    "file": "game:recipes/cooking/augratin.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/1/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 1/*",
+        "textureMapping": ["fruit", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-sammarzano",
+        "shapeElement": "bowl/vegetable 1/*",
+        "textureMapping": ["vegetable", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-oxheart",
+        "shapeElement": "bowl/vegetable 1/*",
+        "textureMapping": ["vegetable", "group3"]
+      }
+    ],
+    "file": "game:recipes/cooking/augratin.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  },
+  {
+    "op": "addeach",
+    "path": "/ingredients/2/validStacks/-",
+    "value": [
+      {
+        "type": "item",
+        "code": "laverace:tomato-cherry",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["fruit", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-sammarzano",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["vegetable", "group3"]
+      },
+      {
+        "type": "item",
+        "code": "laverace:tomato-oxheart",
+        "shapeElement": "bowl/vegetable 2/*",
+        "textureMapping": ["vegetable", "group3"]
+      }
+    ],
+    "file": "game:recipes/cooking/augratin.json",
+    "side": "server",
+    "dependsOn": [{ "modid": "expandedfoods" }]
+  }
+]
