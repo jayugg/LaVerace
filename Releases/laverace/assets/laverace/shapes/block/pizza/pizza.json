@@ -2,9 +2,6 @@
 	"textureWidth": 16,
 	"textureHeight": 16,
 	"textureSizes": {
-		"topping3": [16, 16],
-		"topping2": [16, 16],
-		"topping1": [16, 16],
 		"dough": [16, 16],
 		"sauce": [16, 16],
 		"cheese": [16, 16]

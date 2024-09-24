@@ -60,15 +60,10 @@
   "rainPermeable": false,
   "dropsByType": {
     "*-10": [
-      { "type": "item", "code": "laverace:seeds-tomato-{variety}", "quantity": { "avg": 1 }  },
-      { "type": "item", "code": "laverace:tomato-{variety}", "quantity": { "avg": 4, "var": 0.5 }  }
+      { "type": "item", "code": "laverace:tomato-{variety}", "quantity": { "avg": 4, "var": 1 }  }
     ],
     "*-11": [
-      { "type": "item", "code": "laverace:seeds-tomato-{variety}", "quantity": { "avg": 1.2 }  },
       { "type": "item", "code": "laverace:tomato-{variety}", "quantity": { "avg": 8, "var": 2 }  }
-    ],
-    "*": [
-      { "type": "item", "code": "laverace:seeds-{variety}", "quantity": { "avg": 0.7 }  }
     ]
   },
   "cropProps": {
