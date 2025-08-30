@@ -11,31 +11,29 @@ namespace LaVerace.ModItem;
 
   public class ItemPizzaDough : ItemExpandedRawFood
   {
-    private ItemStack[] tableStacks;
+    private ItemStack[] _tableStacks;
 
-    public override void OnLoaded(ICoreAPI api)
+    public override void OnLoaded(ICoreAPI coreApi)
     {
-      if (this.tableStacks == null)
+      if (_tableStacks == null)
       {
-        List<ItemStack> itemStackList = new List<ItemStack>();
-        foreach (CollectibleObject collectible in api.World.Collectibles)
+        var itemStackList = new List<ItemStack>();
+        foreach (var collectible in coreApi.World.Collectibles)
         {
-          if (collectible is Block block)
-          {
-            JsonObject attributes = block.Attributes;
-            if ((attributes != null ? (attributes.IsTrue("pieFormingSurface") ? 1 : 0) : 0) != 0)
-              itemStackList.Add(new ItemStack(collectible));
-          }
+          if (collectible is not Block block) continue;
+          var attributes = block.Attributes;
+          if ((attributes != null ? (attributes.IsTrue("pieFormingSurface") ? 1 : 0) : 0) != 0)
+            itemStackList.Add(new ItemStack(collectible));
         }
-        this.tableStacks = itemStackList.ToArray();
+        _tableStacks = itemStackList.ToArray();
       }
-      base.OnLoaded(api);
+      base.OnLoaded(coreApi);
     }
 
-    public override void OnUnloaded(ICoreAPI api)
+    public override void OnUnloaded(ICoreAPI coreApi)
     {
-      this.tableStacks = (ItemStack[]) null;
-      base.OnUnloaded(api);
+      _tableStacks = null;
+      base.OnUnloaded(coreApi);
     }
     
     public override void OnHeldInteractStart(
@@ -48,13 +46,13 @@ namespace LaVerace.ModItem;
     {
       if (blockSel != null)
       {
-        JsonObject attributes = this.api.World.BlockAccessor.GetBlock(blockSel.Position).Attributes;
+        var attributes = this.api.World.BlockAccessor.GetBlock(blockSel.Position).Attributes;
         if ((attributes != null ? (attributes.IsTrue("pieFormingSurface") ? 1 : 0) : 0) != 0)
         {
           if (slot.StackSize >= 1)
             (this.api.World.GetBlock(new AssetLocation($"{LvCore.Modid}:pizza-raw")) as BlockPizza)?.TryPlacePizza(byEntity, blockSel);
-          else if (this.api is ICoreClientAPI api)
-            api.TriggerIngameError((object) this, "notpizzaable", Lang.Get("Need at least 1 dough"));
+          else if (this.api is ICoreClientAPI capi)
+            capi.TriggerIngameError(this, "notpizzaable", Lang.Get("Need at least 1 dough"));
           handling = EnumHandHandling.PreventDefault;
           return;
         }
@@ -64,12 +62,12 @@ namespace LaVerace.ModItem;
 
     public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
     {
-      return new WorldInteraction[1]
+      return new WorldInteraction[]
       {
-        new WorldInteraction()
+        new()
         {
           ActionLangCode = $"{LvCore.Modid}:heldhelp-makepizza",
-          Itemstacks = this.tableStacks,
+          Itemstacks = _tableStacks,
           HotKeyCode = "sneak",
           MouseButton = EnumMouseButton.Right
         }

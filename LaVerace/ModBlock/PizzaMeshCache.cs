@@ -19,66 +19,66 @@ namespace LaVerace.ModBlock
         public override void StartClientSide(ICoreClientAPI api)
         {
             base.StartClientSide(api);
-            this.capi = api;
+            _capi = api;
         }
 
-        ICoreClientAPI capi;
-        Block mealtextureSourceBlock;
+        private ICoreClientAPI _capi;
+        private Block _mealtextureSourceBlock;
 
-        AssetLocation[] pizzaShapeBySize = new AssetLocation[]
-        {
-            new AssetLocation($"{LvCore.Modid}:block/pizza/pizza1"),
-            new AssetLocation($"{LvCore.Modid}:block/pizza/pizza2"),
-            new AssetLocation($"{LvCore.Modid}:block/pizza/pizza3"),
-            new AssetLocation($"{LvCore.Modid}:block/pizza/pizza4"),
-        };
+        private AssetLocation[] _pizzaShapeBySize =
+        [
+            new($"{LvCore.Modid}:block/pizza/pizza1"),
+            new($"{LvCore.Modid}:block/pizza/pizza2"),
+            new($"{LvCore.Modid}:block/pizza/pizza3"),
+            new($"{LvCore.Modid}:block/pizza/pizza4")
+        ];
 
-        private AssetLocation pizzaShape = new AssetLocation($"{LvCore.Modid}:block/pizza/pizza");
+        private AssetLocation _pizzaShape = new($"{LvCore.Modid}:block/pizza/pizza");
 
-        public Size2i AtlasSize => capi.BlockTextureAtlas.Size;
-        protected Shape nowTesselatingShape;
+        public Size2i AtlasSize => _capi.BlockTextureAtlas.Size;
+        protected Shape NowTesselatingShape;
 
-        BlockPizza nowTesselatingBlock;
-        ItemStack[] contentStacks;
-        AssetLocation baseTextureLoc;
-        AssetLocation sauceTextureLoc;
-        AssetLocation cheeseTextureLoc;
-        AssetLocation[] toppingsTextureLocs;
-        AssetLocation transparentTextureLoc = new AssetLocation("block/transparent");
+        private BlockPizza _nowTesselatingBlock;
+        private ItemStack[] _contentStacks;
+        private AssetLocation _baseTextureLoc;
+        private AssetLocation _sauceTextureLoc;
+        private AssetLocation _cheeseTextureLoc;
+        private AssetLocation[] _toppingsTextureLocs;
+        private AssetLocation _transparentTextureLoc = new("block/transparent");
 
         public TextureAtlasPosition this[string textureCode]
         {
             get
             {
-                AssetLocation texturePath = baseTextureLoc;
-                if (textureCode == "sauce") texturePath = sauceTextureLoc;
-                if (textureCode == "cheese") texturePath = cheeseTextureLoc;
+                var texturePath = _baseTextureLoc;
+                if (textureCode == "sauce") texturePath = _sauceTextureLoc;
+                if (textureCode == "cheese") texturePath = _cheeseTextureLoc;
                 if (textureCode.Contains("topping"))
                 {
-                    int index = int.Parse(textureCode[7].ToString()) - 1;
-                    texturePath = toppingsTextureLocs[index];
+                    var index = int.Parse(textureCode[7].ToString()) - 1;
+                    texturePath = _toppingsTextureLocs[index];
                 }
 
                 if (texturePath == null)
                 {
                     LvCore.Logger.Warning("Missing texture path for pizza mesh texture code {0}, seems like a missing texture definition or invalid pizza block.", textureCode);
-                    return capi.BlockTextureAtlas.UnknownTexturePosition;
+                    return _capi.BlockTextureAtlas.UnknownTexturePosition;
                 }
 
-                TextureAtlasPosition texpos = capi.BlockTextureAtlas[texturePath];
+                var texpos = _capi.BlockTextureAtlas[texturePath];
 
                 if (texpos == null)
                 {
-                    IAsset texAsset = capi.Assets.TryGet(texturePath.Clone().WithPathPrefixOnce("textures/").WithPathAppendixOnce(".png"));
+                    var texAsset = _capi.Assets.TryGet(texturePath.Clone().WithPathPrefixOnce("textures/").WithPathAppendixOnce(".png"));
                     if (texAsset != null)
                     {
-                        BitmapRef bmp = texAsset.ToBitmap(capi);
-                        capi.BlockTextureAtlas.GetOrInsertTexture(texturePath, out _, out texpos, () => bmp);
+                        var bmp = texAsset.ToBitmap(_capi);
+                        _capi.BlockTextureAtlas.GetOrInsertTexture(texturePath, out _, out texpos, () => bmp);
                     }
                     else
                     {
-                        LvCore.Logger.Warning("Pizza mesh texture {1} not found.", nowTesselatingBlock.Code, texturePath);
-                        texpos = capi.BlockTextureAtlas.UnknownTexturePosition;
+                        LvCore.Logger.Warning("Pizza mesh texture {1} not found.", _nowTesselatingBlock.Code, texturePath);
+                        texpos = _capi.BlockTextureAtlas.UnknownTexturePosition;
                     }
                 }
                 return texpos;
@@ -89,21 +89,19 @@ namespace LaVerace.ModBlock
         {
             Dictionary<int, MultiTextureMeshRef> meshrefs;
             object obj;
-            if (capi.ObjectCache.TryGetValue("pizzaMeshRefs", out obj))
+            if (_capi.ObjectCache.TryGetValue("pizzaMeshRefs", out obj))
                 meshrefs = obj as Dictionary<int, MultiTextureMeshRef>;
             else
-                capi.ObjectCache["pizzaMeshRefs"] = meshrefs = new Dictionary<int, MultiTextureMeshRef>();
+                _capi.ObjectCache["pizzaMeshRefs"] = meshrefs = new Dictionary<int, MultiTextureMeshRef>();
             if (pizzaStack == null) return null;
-            ItemStack[] contents = (pizzaStack.Block as BlockPizza)?.GetContents(capi.World, pizzaStack);
-            string extrakey = "ct" + "-bl" + pizzaStack.Attributes.GetAsInt("bakeLevel", 0) + "-ps" + pizzaStack.Attributes.GetAsInt("pizzaSize");
-            int mealhashcode = GetMealHashCode(pizzaStack.Block, contents, null, extrakey);
-            MultiTextureMeshRef mealMeshRef;
-            if (!meshrefs.TryGetValue(mealhashcode, out mealMeshRef))
-            {
-                MeshData mesh = GetPizzaMesh(pizzaStack);
-                if (mesh == null) return null;
-                meshrefs[mealhashcode] = mealMeshRef = capi.Render.UploadMultiTextureMesh(mesh);
-            }
+            var contents = (pizzaStack.Block as BlockPizza)?.GetContents(_capi.World, pizzaStack);
+            var extrakey = "ct" + "-bl" + pizzaStack.Attributes.GetAsInt("bakeLevel", 0) + "-ps" + pizzaStack.Attributes.GetAsInt("pizzaSize");
+            var mealhashcode = GetMealHashCode(pizzaStack.Block, contents, null, extrakey);
+            MultiTextureMeshRef mealMeshRef = null;
+            if (meshrefs == null || meshrefs.TryGetValue(mealhashcode, out mealMeshRef)) return mealMeshRef;
+            var mesh = GetPizzaMesh(pizzaStack);
+            if (mesh == null) return null;
+            meshrefs[mealhashcode] = mealMeshRef = _capi.Render.UploadMultiTextureMesh(mesh);
             return mealMeshRef;
         }
 
@@ -115,12 +113,12 @@ namespace LaVerace.ModBlock
             // Slot 2: Cheese
             // Slot 3-5: Toppings
 
-            nowTesselatingBlock = pizzaStack.Block as BlockPizza;
-            if (nowTesselatingBlock == null) return null;  //This will occur if the pizzaStack changed to rot
+            _nowTesselatingBlock = pizzaStack.Block as BlockPizza;
+            if (_nowTesselatingBlock == null) return null;  //This will occur if the pizzaStack changed to rot
 
-            contentStacks = nowTesselatingBlock.GetContents(capi.World, pizzaStack);
+            _contentStacks = _nowTesselatingBlock.GetContents(_capi.World, pizzaStack);
 
-            int pizzaSize = pizzaStack.Attributes.GetAsInt("pizzaSize");
+            var pizzaSize = pizzaStack.Attributes.GetAsInt("pizzaSize");
 
             // At this spot we have to determine the textures for "dough" and "filling"
             // Texture determination rules:
@@ -131,65 +129,68 @@ namespace LaVerace.ModBlock
 
             // Thus we need to determine the texture for the dough, sauce, cheese and toppings
 
-            var stackprops = contentStacks.Select(stack => stack?.GetInPizzaProperties()).ToArray();
+            var stackprops = _contentStacks.Select(stack => stack?.GetInPizzaProperties()).ToArray();
 
-            int bakeLevel = pizzaStack.Attributes.GetAsInt("bakeLevel", 0);
+            var bakeLevel = pizzaStack.Attributes.GetAsInt("bakeLevel", 0);
 
             if (stackprops.Length == 0) return null;
             if (stackprops.Length < 6) stackprops = stackprops.Concat(new InPizzaProperties[6 - stackprops.Length]).ToArray();
             
-            if (ContentsRotten(contentStacks))
+            if (ContentsRotten(_contentStacks))
             {
-                baseTextureLoc = new AssetLocation("game:block/rot/rot");
-                sauceTextureLoc = new AssetLocation("game:block/rot/rot");
-                cheeseTextureLoc = new AssetLocation("game:block/rot/rot");
-                toppingsTextureLocs = new AssetLocation[] { new ("game:block/rot/rot"), new ("game:block/rot/rot"), new ("game:block/rot/rot") };
+                _baseTextureLoc = new AssetLocation("game:block/rot/rot");
+                _sauceTextureLoc = new AssetLocation("game:block/rot/rot");
+                _cheeseTextureLoc = new AssetLocation("game:block/rot/rot");
+                _toppingsTextureLocs = [new ("game:block/rot/rot"), new ("game:block/rot/rot"), new ("game:block/rot/rot")
+                ];
             }
             else
             {
                 if (stackprops[0] != null)
                 {
-                    baseTextureLoc = stackprops[0].Texture.Clone() ?? transparentTextureLoc;
-                    baseTextureLoc.Path = baseTextureLoc.Path.Replace("{bakelevel}", "" + (bakeLevel + 1));
-                    sauceTextureLoc = stackprops[1]?.Texture.Clone() ?? transparentTextureLoc;
-                    cheeseTextureLoc = stackprops[2]?.Texture.Clone() ?? transparentTextureLoc;
-                    toppingsTextureLocs = new AssetLocation[] {
-                        stackprops[3]?.Texture.Clone() ?? transparentTextureLoc,
-                        stackprops[4]?.Texture.Clone() ?? transparentTextureLoc,
-                        stackprops[5]?.Texture.Clone() ?? transparentTextureLoc
-                    };
+                    _baseTextureLoc = stackprops[0].Texture.Clone() ?? _transparentTextureLoc;
+                    _baseTextureLoc.Path = _baseTextureLoc.Path.Replace("{bakelevel}", "" + (bakeLevel + 1));
+                    _sauceTextureLoc = stackprops[1]?.Texture.Clone() ?? _transparentTextureLoc;
+                    _cheeseTextureLoc = stackprops[2]?.Texture.Clone() ?? _transparentTextureLoc;
+                    _toppingsTextureLocs =
+                    [
+                        stackprops[3]?.Texture.Clone() ?? _transparentTextureLoc,
+                        stackprops[4]?.Texture.Clone() ?? _transparentTextureLoc,
+                        stackprops[5]?.Texture.Clone() ?? _transparentTextureLoc
+                    ];
                 }
             }
 
             // AssetLocation shapeloc = pizzaShapeBySize[pizzaSize - 1];
 
-            AssetLocation shapeloc = pizzaShape;
+            var shapeloc = _pizzaShape;
 
             shapeloc.WithPathAppendixOnce(".json").WithPathPrefixOnce("shapes/");
-            Shape shape = Shape.TryGet(capi, shapeloc);
+            var shape = Shape.TryGet(_capi, shapeloc);
             MeshData mesh;
             
-            string[] fillElements = new string[] { "base" };
-            if (stackprops[1] != null) fillElements = fillElements.Concat(new [] {"salsa"}).ToArray();
-            if (stackprops[2] != null) fillElements = fillElements.Concat(new [] {"mozzarella"}).ToArray();
-            if (stackprops[3] != null || stackprops[4] != null || stackprops[5]!= null) fillElements = fillElements.Concat(new [] {"toppings"}).ToArray();
+            var fillElements = new string[] { "base" };
+            if (stackprops[1] != null) fillElements = fillElements.Concat(["salsa"]).ToArray();
+            if (stackprops[2] != null) fillElements = fillElements.Concat(["mozzarella"]).ToArray();
+            if (stackprops[3] != null || stackprops[4] != null || stackprops[5]!= null) fillElements = fillElements.Concat(
+                ["toppings"]).ToArray();
 
             // LvCore.Logger.Warning($"Filling elements: {string.Join(", ", fillElements)}");
             
-            string[] selectiveElements = System.Array.Empty<string>();
+            var selectiveElements = Array.Empty<string>();
             
             foreach (var element in fillElements)
             {
-                for (int i = 0; i < pizzaSize; i++)
+                for (var i = 0; i < pizzaSize; i++)
                 {
                     // LvCore.Logger.Warning($"Adding element " + $"origin/quarter{i + 1}/" + element + $"{i + 1}/*");
-                    selectiveElements = selectiveElements.Concat(new [] {$"origin/quarter{i + 1}/" + element + $"{i + 1}/*"}).ToArray();
+                    selectiveElements = selectiveElements.Concat([$"origin/quarter{i + 1}/" + element + $"{i + 1}/*"]).ToArray();
                 }
             }
 
             try
             {
-                capi.Tesselator.TesselateShape("pizza", shape, out mesh, this, null, 0, 0, 0, null, selectiveElements);
+                _capi.Tesselator.TesselateShape("pizza", shape, out mesh, this, null, 0, 0, 0, null, selectiveElements);
                 if (transform != null) mesh.ModelTransform(transform);
                 return mesh;
             }
@@ -204,7 +205,7 @@ namespace LaVerace.ModBlock
         
         public static bool ContentsRotten(ItemStack[] contentStacks)
         {
-            for (int i = 0; i < contentStacks.Length; i++)
+            for (var i = 0; i < contentStacks.Length; i++)
             {
                 if (contentStacks[i]?.Collectible.Code.Path == "rot") return true;
             }
@@ -213,11 +214,11 @@ namespace LaVerace.ModBlock
 
         protected int GetMealHashCode(Block block, ItemStack[] contentStacks, Vec3f translate = null, string extraKey = null)
         {
-            string shapestring = block.Shape.ToString() + block.Code.ToShortString();
+            var shapestring = block.Shape.ToString() + block.Code.ToShortString();
             if (translate != null) shapestring += translate.X + "/" + translate.Y + "/" + translate.Z;
 
-            string contentstring = "";
-            for (int i = 0; i < contentStacks.Length; i++)
+            var contentstring = "";
+            for (var i = 0; i < contentStacks.Length; i++)
             {
                 if (contentStacks[i] == null) continue;
 

@@ -52,7 +52,7 @@ namespace LaVerace.ModBlockEntity
     // Eliminates the need to convert it to an itemstack once it's placed in inventory
     public class BlockEntityPizza : BlockEntityContainer
     {
-        InventoryGeneric inv;
+        private InventoryGeneric inv;
         public override InventoryBase Inventory => inv;
         public override string InventoryClassName => "pizza";
 
@@ -61,7 +61,7 @@ namespace LaVerace.ModBlockEntity
             get
             {
                 if (inv[0].Itemstack.Block is not BlockPizza pizzaBlock) return false;
-                ItemStack[] cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
+                var cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
                 return cStacks[1] != null || cStacks[2] != null || cStacks[3] != null || cStacks[4] != null || cStacks[5] != null;
             }
         }
@@ -71,7 +71,7 @@ namespace LaVerace.ModBlockEntity
             get
             {
                 if (inv[0].Itemstack.Block is not BlockPizza pizzaBlock) return false;
-                ItemStack[] cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
+                var cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
                 // LvCore.Logger.Warning($"Checking filling: {cStacks.Length}");
                 if (cStacks.Length < 6) return false;
                 return cStacks[1] != null && cStacks[2] != null && cStacks[3] != null && cStacks[4] != null && cStacks[5] != null;
@@ -83,15 +83,15 @@ namespace LaVerace.ModBlockEntity
             get
             {
                 if (inv[0].Itemstack.Block is not BlockPizza pizzaBlock) return false;
-                ItemStack[] cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
+                var cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
                 return cStacks[1] != null;
             }
         }
 
 
-        PizzaMeshCache ms;
-        MeshData mesh;
-        ICoreClientAPI capi;
+        private PizzaMeshCache ms;
+        private MeshData mesh;
+        private ICoreClientAPI capi;
 
         public BlockEntityPizza() : base()
         {
@@ -164,10 +164,10 @@ namespace LaVerace.ModBlockEntity
         {
             if (inv[0].Empty) return null;
 
-            int size = inv[0].Itemstack.Attributes.GetAsInt("pizzaSize");
+            var size = inv[0].Itemstack.Attributes.GetAsInt("pizzaSize");
             MarkDirty(true);
 
-            ItemStack stack = inv[0].Itemstack.Clone();
+            var stack = inv[0].Itemstack.Clone();
 
             if (size <= 1)
             {
@@ -196,11 +196,12 @@ namespace LaVerace.ModBlockEntity
 
         public void OnPlaced(IPlayer byPlayer)
         {
-            ItemStack doughStack = byPlayer.InventoryManager.ActiveHotbarSlot.TakeOut(1);
+            var doughStack = byPlayer.InventoryManager.ActiveHotbarSlot.TakeOut(1);
             if (doughStack == null) return;
 
             inv[0].Itemstack = new ItemStack(Block);
-            (inv[0].Itemstack.Block as BlockPizza)?.SetContents(inv[0].Itemstack, new ItemStack[6] { doughStack, null, null, null, null, null });
+            (inv[0].Itemstack.Block as BlockPizza)?.SetContents(inv[0].Itemstack, [doughStack, null, null, null, null, null
+            ]);
             inv[0].Itemstack.Attributes.SetInt("pizzaSize", 4);
             inv[0].Itemstack.Attributes.SetBool("bakeable", false);
 
@@ -211,16 +212,16 @@ namespace LaVerace.ModBlockEntity
         {
             var pizzaBlock = inv[0].Itemstack.Block as BlockPizza;
 
-            ItemSlot hotbarSlot = byPlayer.InventoryManager.ActiveHotbarSlot;
+            var hotbarSlot = byPlayer.InventoryManager.ActiveHotbarSlot;
 
-            EnumTool? tool = hotbarSlot?.Itemstack?.Collectible.Tool;
+            var tool = hotbarSlot?.Itemstack?.Collectible.Tool;
             if (tool == EnumTool.Knife || tool == EnumTool.Sword)
             {
                 if (pizzaBlock != null && pizzaBlock.State != "raw")
                 {
                     if (Api.Side == EnumAppSide.Server)
                     {
-                        ItemStack slicestack = TakeSlice();
+                        var slicestack = TakeSlice();
                         if (!byPlayer.InventoryManager.TryGiveItemstack(slicestack))
                         {
                             Api.World.SpawnItemEntity(slicestack, Pos.ToVec3d().Add(0.5, 0.5, 0.5));
@@ -245,7 +246,7 @@ namespace LaVerace.ModBlockEntity
 
             if (hotbarSlot is { Empty: false })
             {
-                bool added = TryAddIngredientFrom(hotbarSlot, byPlayer);
+                var added = TryAddIngredientFrom(hotbarSlot, byPlayer);
                 if (added)
                 {
                     loadMesh();
@@ -269,7 +270,7 @@ namespace LaVerace.ModBlockEntity
                     {
                         Api.World.SpawnItemEntity(inv[0].Itemstack, Pos.ToVec3d().Add(0.5, 0.25, 0.5));
                     }
-                    this.inv[0].Itemstack = null;
+                    inv[0].Itemstack = null;
                 }
 
                 Api.World.BlockAccessor.SetBlock(0, Pos);
@@ -317,12 +318,12 @@ namespace LaVerace.ModBlockEntity
             var pizzaBlock = (inv[0].Itemstack.Block as BlockPizza);
             if (pizzaBlock == null) return false;
 
-            ItemStack[] cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
+            var cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
 
-            bool isFull = cStacks[1] != null && cStacks[2] != null && cStacks[3] != null && cStacks[4] != null && cStacks[5] != null;
-            bool hasSauce = cStacks[1] != null;
-            bool hasCheese = cStacks[2] != null;
-            bool hasTopping = cStacks[3] != null || cStacks[4] != null || cStacks[5] != null;;
+            var isFull = cStacks[1] != null && cStacks[2] != null && cStacks[3] != null && cStacks[4] != null && cStacks[5] != null;
+            var hasSauce = cStacks[1] != null;
+            var hasCheese = cStacks[2] != null;
+            var hasTopping = cStacks[3] != null || cStacks[4] != null || cStacks[5] != null;;
 
             if (!hasSauce && pizzaProps.PartType == EnumPizzaPartType.Sauce)
             {
@@ -356,14 +357,14 @@ namespace LaVerace.ModBlockEntity
             {
                 if (byPlayer != null && capi != null) capi.TriggerIngameError(this, "pizzafullfilling", Lang.Get("Can't add more filling - already completely filled pizza"));
             }
-            int emptySlotIndex = 3 + (cStacks[3] != null ? 1 + (cStacks[4] != null ? 1 : 0) : 0);
+            var emptySlotIndex = 3 + (cStacks[3] != null ? 1 + (cStacks[4] != null ? 1 : 0) : 0);
             AddIngredientFromSlot(slot, pizzaProps, (EnumPizzaContentSlot) emptySlotIndex, pizzaBlock, containerFlag, byPlayer);
             return true;
         }
 
         private bool AddIngredientFromSlot(ItemSlot slot, InPizzaProperties pizzaProps, EnumPizzaContentSlot contentSlot, BlockPizza pizzaBlock, bool containerFlag, IPlayer byPlayer)
         {
-            ItemStack[] cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
+            var cStacks = pizzaBlock.GetContents(Api.World, inv[0].Itemstack);
             if (containerFlag && slot.Itemstack.Collectible is BlockLiquidContainerBase container)
             {
                 if (slot.Itemstack.Collectible is not ILiquidSource { AllowHeldLiquidTransfer: true })
@@ -402,7 +403,7 @@ namespace LaVerace.ModBlockEntity
             return true;
         }
 
-        void loadMesh()
+        private void loadMesh()
         {
             if (Api == null || Api.Side == EnumAppSide.Server || inv[0].Empty) return;
             mesh = ms.GetPizzaMesh(inv[0].Itemstack);
@@ -410,7 +411,7 @@ namespace LaVerace.ModBlockEntity
 
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
         {
-            bool isRotten = MealMeshCache.ContentsRotten(inv);
+            var isRotten = MealMeshCache.ContentsRotten(inv);
             if (isRotten)
             {
                 dsc.Append(Lang.Get("Rotten"));

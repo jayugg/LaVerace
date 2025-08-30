@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <OutputPath>bin\$(Configuration)\Mods\mod</OutputPath>
     </PropertyGroup>
@@ -65,14 +65,6 @@
         <Content Include="modinfo.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="assets\laverace\patches\expandedfoods\items\mixing\" />
-      <Folder Include="assets\laverace\shapes\block\" />
-      <Folder Include="assets\laverace\shapes\block\pizza\" />
-      <Folder Include="assets\laverace\textures\block\food\" />
-      <Folder Include="assets\laverace\textures\block\plant\crop\" />
     </ItemGroup>
 
 </Project>

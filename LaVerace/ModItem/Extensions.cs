@@ -10,7 +10,6 @@ public static class Extensions
     {
         var pizzaProps = stack.ItemAttributes?["inPizzaProperties"]?.AsObject<InPizzaProperties>(null, stack.Collectible.Code.Domain);
 
-        var containerFlag = false;
         var container = stack.Collectible as BlockLiquidContainerBase;
             
         if (stack.Collectible is BlockLiquidContainerBase)
@@ -19,7 +18,6 @@ public static class Extensions
             // LvCore.Logger.Warning("Container flag set");
             // LvCore.Logger.Warning("Container content: " + container.GetContent(stack));
             // LvCore.Logger.Warning("Container content props: " + container.GetContent(stack)?.ItemAttributes?["inPizzaProperties"]);
-            containerFlag = true;
         }
 
         pizzaProps ??= InPizzaProperties.FromPie(stack.ItemAttributes?["inPieProperties"]

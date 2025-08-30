@@ -1,6 +1,6 @@
 {
   "code": "seeds",
-  "class": "laverace.ItemExpandedPlantableSeed",
+  "class": "ItemPlantableSeed",
   "maxstacksize": 64,
   "variantgroups": [
     { "code": "type", "states": ["tomato"] },
